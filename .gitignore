@@ -1,0 +1,9 @@
+.DS_Store
+*.py[cdo]
+TODO
+data/
+__pycache__/
+.vscode/
+*.env
+*.old
+WRITEUP.md

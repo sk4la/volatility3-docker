@@ -1,6 +1,6 @@
-# Volatility 3 Framework on Docker
+# Volatility 3 framework on Docker
 
-This repository hosts some ready-to-use Docker images embedding the newest Volatility 3 Framework. Check the [official Volatility repository](https://github.com/volatilityfoundation/volatility3/) for more information.
+This repository hosts some ready-to-use Docker images embedding the newest Volatility 3 framework. Check the [official Volatility repository](https://github.com/volatilityfoundation/volatility3/) for more information.
 
 These images are based on the [Alpine Linux](https://alpinelinux.org/) distribution.
 

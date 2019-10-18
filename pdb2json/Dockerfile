@@ -1,4 +1,4 @@
-# Docker image based on Alpine Linux embedding the Volatility 3 Framework (https://github.com/volatilityfoundation/volatility3).
+# Docker image based on Alpine Linux embedding the Volatility 3 framework (https://github.com/volatilityfoundation/volatility3).
 #
 # Maintained by sk4la <sk4la.box@gmail.com>.
 #
@@ -43,7 +43,7 @@ RUN apk add --no-cache                  \
     python3-dev
 
 
-# Install the Volatility Framework
+# Install the Volatility 3 framework
 RUN git clone https://github.com/volatilityfoundation/volatility3.git      && \
     cd volatility3                                                         && \
     python3 setup.py install                                               && \

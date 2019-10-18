@@ -1,4 +1,4 @@
-# Docker image based on Alpine Linux embedding the Volatility 3 Framework (https://github.com/volatilityfoundation/volatility3).
+# Docker image based on Alpine Linux embedding the Volatility 3 framework (https://github.com/volatilityfoundation/volatility3).
 #
 # Maintained by sk4la <sk4la.box@gmail.com>.
 #
@@ -40,7 +40,7 @@ RUN git clone --recursive https://github.com/VirusTotal/yara-python && \
     cd yara-python                                                  && \
     python3 setup.py build
 
-# Fetch the symbols from the Volatility Framework
+# Fetch the symbols from the Volatility 3 framework
 RUN curl -fL https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip -o linux.zip     && \
     unzip linux.zip                                                                                    && \
     curl -fL https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip -o mac.zip         && \
@@ -77,7 +77,7 @@ COPY --from=builder --chown=${DEF_USERNAME}:${DEF_USERNAME} /tmp/build/yara-pyth
 RUN find . -type d -exec chmod 755 {} \; && \
     find . -type f -exec chmod 644 {} \;
 
-# Install the Volatility Framework
+# Install the Volatility 3 framework
 RUN git clone https://github.com/volatilityfoundation/volatility3.git      && \
     cd volatility3                                                         && \
     python3 setup.py install                                               && \

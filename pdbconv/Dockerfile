@@ -3,7 +3,7 @@
 # Maintained by sk4la <sk4la.box@gmail.com>.
 #
 # To build:
-#   $ docker build -t sk4la/pdb2json:latest .
+#   $ docker build -t sk4la/pdbconv:latest .
 #
 # Additionaly, one can set the following build arguments (using the --build-arg option) to customize the build:
 #   - DEF_ALPINE_VERSION [3.10]
@@ -11,8 +11,8 @@
 #   - DEF_USERNAME [root]
 #
 # To run as a standalone container:
-#   $ docker run -v "${PWD}:/case" --rm --cap-drop=ALL sk4la/pdb2json
-#   $ docker run -v "${PWD}:/case" --rm --cap-drop=ALL sk4la/pdb2json -f /case/ntkrnlmp.pdb -o /case/ntkrnlmp.json
+#   $ docker run -v "${PWD}:/case" --rm --cap-drop=ALL sk4la/pdbconv
+#   $ docker run -v "${PWD}:/case" --rm --cap-drop=ALL sk4la/pdbconv -f /case/ntkrnlmp.pdb -o /case/ntkrnlmp.json
 #
 # See https://github.com/sk4la/volatility3-docker for details.
 
@@ -23,7 +23,7 @@ FROM alpine:${DEF_ALPINE_VERSION}
 ARG DEF_USERNAME=root
 ARG DEF_INSTALL_PREFIX=/usr
 
-LABEL name="pdb2json"                                   \
+LABEL name="pdbconv"                                    \
       version="0.1"                                     \
       uri="https://github.com/sk4la/volatility3-docker" \
       maintainer="sk4la <sk4la.box@gmail.com>"          \
@@ -42,7 +42,6 @@ RUN apk add --no-cache                  \
     musl-dev                            \
     python3-dev
 
-
 # Install the Volatility 3 framework
 RUN git clone https://github.com/volatilityfoundation/volatility3.git      && \
     cd volatility3                                                         && \
@@ -58,6 +57,6 @@ RUN apk --purge del \
 
 WORKDIR /
 
-ENTRYPOINT [ "python3", "/usr/lib/volatility3/development/pdbparse-to-json.py" ]
+ENTRYPOINT [ "/usr/bin/env",  "python3", "/usr/lib/volatility3/volatility/framework/symbols/windows/pdbconv.py" ]
 
 CMD [ "-h" ]

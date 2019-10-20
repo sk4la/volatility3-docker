@@ -72,7 +72,7 @@ RUN apk add --no-cache                  \
     apk add --no-cache --virtual .build \
     git
 
-COPY --from=builder --chown=${DEF_USERNAME}:${DEF_USERNAME} /tmp/build/yara-python yara-python
+COPY --from=builder --chown="${DEF_USERNAME}:${DEF_USERNAME}" /tmp/build/yara-python yara-python
 
 RUN find . -type d -exec chmod 755 {} \; && \
     find . -type f -exec chmod 644 {} \;
@@ -90,9 +90,9 @@ RUN python3 setup.py install
 
 WORKDIR ${DEF_INSTALL_PREFIX}/lib/volatility3/volatility/symbols/
 
-COPY --from=builder --chown=${DEF_USERNAME}:${DEF_USERNAME} /tmp/build/linux linux
-COPY --from=builder --chown=${DEF_USERNAME}:${DEF_USERNAME} /tmp/build/mac mac
-COPY --from=builder --chown=${DEF_USERNAME}:${DEF_USERNAME} /tmp/build/windows windows
+COPY --from=builder --chown="${DEF_USERNAME}:${DEF_USERNAME}" /tmp/build/linux linux
+COPY --from=builder --chown="${DEF_USERNAME}:${DEF_USERNAME}" /tmp/build/mac mac
+COPY --from=builder --chown="${DEF_USERNAME}:${DEF_USERNAME}" /tmp/build/windows windows
 
 RUN find . -type d -exec chmod 755 {} \; && \
     find . -type f -exec chmod 644 {} \;

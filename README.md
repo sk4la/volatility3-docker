@@ -32,7 +32,7 @@ Once the images have been built, they can be instanciated inside fresh container
 ```sh
 $ docker run -v "${PWD}:/case" --rm --cap-drop=ALL sk4la/volatility
 $ docker run -v "${PWD}:/case" --rm --cap-drop=ALL -it sk4la/volshell
-$ docker run -v "${PWD}:/case" --rm --cap-drop=ALL sk4la/pdb2json
+$ docker run -v "${PWD}:/case" --rm --cap-drop=ALL sk4la/pdbconv
 ```
 
 Note that every artifact will be lost unless stored through the [bound volume](https://docs.docker.com/storage/bind-mounts/).

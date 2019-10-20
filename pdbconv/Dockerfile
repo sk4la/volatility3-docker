@@ -57,6 +57,6 @@ RUN apk --purge del \
 
 WORKDIR /
 
-ENTRYPOINT [ "/usr/bin/env",  "python3", "/usr/lib/volatility3/volatility/framework/symbols/windows/pdbconv.py" ]
+ENTRYPOINT [ "/usr/bin/env", "python3", "/usr/lib/volatility3/volatility/framework/symbols/windows/pdbconv.py" ]
 
 CMD [ "-h" ]

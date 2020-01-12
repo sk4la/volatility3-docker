@@ -6,19 +6,19 @@
 #   $ docker build -t sk4la/volshell:latest .
 #
 # Additionaly, one can set the following build arguments (using the --build-arg option) to customize the build:
-#   - DEF_ALPINE_VERSION [3.10]
+#   - DEF_ALPINE_VERSION [3.11]
 #   - DEF_INSTALL_PREFIX [/usr]
 #   - DEF_USERNAME [root]
 #
 # To run as a standalone container:
-#   $ docker run -v "${PWD}:/case:ro" --rm --cap-drop=ALL -it sk4la/volshell
-#   $ docker run -v "${PWD}:/case:ro" --rm --cap-drop=ALL -it sk4la/volshell -f /case/volatile.dmp
+#   $ docker run -v $PWD:/case:ro --rm --cap-drop ALL -it sk4la/volshell
+#   $ docker run -v $PWD:/case:ro --rm --cap-drop ALL -it sk4la/volshell -f /case/volatile.dmp
 #
 # One can also remove the ":ro" suffix (in the -v option) to allow writing to disk.
 #
 # See https://github.com/sk4la/volatility3-docker for details.
 
-ARG DEF_ALPINE_VERSION=3.10
+ARG DEF_ALPINE_VERSION=3.11
 
 FROM alpine:${DEF_ALPINE_VERSION} AS builder
 
@@ -78,9 +78,9 @@ RUN find . -type d -exec chmod 755 {} \; && \
     find . -type f -exec chmod 644 {} \;
 
 # Install the Volatility 3 framework
-RUN git clone https://github.com/volatilityfoundation/volatility3.git      && \
-    cd volatility3                                                         && \
-    python3 setup.py install                                               && \
+RUN git clone https://github.com/volatilityfoundation/volatility3.git && \
+    cd volatility3                                                    && \
+    python3 setup.py install                                          && \
     ln -sf ${DEF_INSTALL_PREFIX}/bin/vol ${DEF_INSTALL_PREFIX}/bin/volatility
 
 WORKDIR ${DEF_INSTALL_PREFIX}/lib/yara-python
@@ -104,4 +104,4 @@ WORKDIR /
 
 ENTRYPOINT [ "/usr/bin/env", "volshell" ]
 
-CMD [ "-h" ]
+CMD [ "--help" ]

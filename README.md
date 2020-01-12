@@ -17,22 +17,22 @@ Using these images requires Docker to be installed on the system. Please refer t
 Building the complete lab is as simple as:
 
 ```sh
-$ git clone https://github.com/sk4la/volatility3-docker.git
-$ make -C volatility3-docker
+git clone https://github.com/sk4la/volatility3-docker.git && make -C volatility3-docker
 ```
 
 Note that these images are somewhat heavy (~2GB) since they embed some of the kernel [debug symbols](https://en.wikipedia.org/wiki/Debug_symbol/) for GNU/Linux, macOS and Microsoft Windows.
 
-> These images are also available on the [Docker Hub](https://hub.docker.com/u/sk4la/).
+These images are also available on the [Docker Hub](https://hub.docker.com/u/sk4la/).
 
 ### Usage
 
 Once the images have been built, they can be instanciated inside fresh containers using:
 
 ```sh
-$ docker run -v "${PWD}:/case" --rm --cap-drop=ALL sk4la/volatility
-$ docker run -v "${PWD}:/case" --rm --cap-drop=ALL -it sk4la/volshell
-$ docker run -v "${PWD}:/case" --rm --cap-drop=ALL sk4la/pdbconv
+docker run -v $PWD:/case --rm --cap-drop ALL sk4la/dwarf2json
+docker run -v $PWD:/case --rm --cap-drop ALL sk4la/volatility
+docker run -v $PWD:/case --rm --cap-drop ALL -it sk4la/volshell
+docker run -v $PWD:/case --rm --cap-drop ALL sk4la/pdbconv
 ```
 
 Note that every artifact will be lost unless stored through the [bound volume](https://docs.docker.com/storage/bind-mounts/).
@@ -41,7 +41,7 @@ Note that every artifact will be lost unless stored through the [bound volume](h
 
 Customizing the build is allowed through several environment variables:
 
-* `DEF_ALPINE_VERSION` (defaults to `3.10`)
+* `DEF_ALPINE_VERSION` (defaults to `3.11`)
 * `DEF_INSTALL_PREFIX` (defaults to `/usr`)
 * `DEF_USERNAME` (defaults to `root`)
 

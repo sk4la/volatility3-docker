@@ -35,7 +35,8 @@ RUN apk add --no-cache --virtual .build \
     git                                 \
     musl-dev                            \
     python3-dev                         \
-    unzip
+    unzip                            && \
+    python3 -m ensurepip --default-pip
 
 # Build the Python bindings for YARA
 RUN git clone --recursive https://github.com/VirusTotal/yara-python && \
@@ -72,7 +73,8 @@ WORKDIR ${DEF_INSTALL_PREFIX}/lib
 RUN apk add --no-cache                  \
     python3                          && \
     apk add --no-cache --virtual .build \
-    git
+    git                              && \
+    python3 -m ensurepip --default-pip
 
 COPY --from=builder --chown="${DEF_USERNAME}:${DEF_USERNAME}" /tmp/build/yara-python yara-python
 

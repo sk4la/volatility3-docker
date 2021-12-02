@@ -40,7 +40,8 @@ RUN apk add --no-cache                  \
     gcc                                 \
     git                                 \
     musl-dev                            \
-    python3-dev
+    python3-dev                      && \
+    python3 -m ensurepip --default-pip
 
 # Install the Volatility 3 framework
 RUN git clone https://github.com/volatilityfoundation/volatility3.git --single-branch --branch stable --depth 1 && \

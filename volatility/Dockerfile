@@ -35,7 +35,8 @@ RUN apk add --no-cache --virtual .build \
     git                                 \
     musl-dev                            \
     python3-dev                         \
-    unzip
+    unzip                            && \
+    python3 -m ensurepip --default-pip
 
 # Build the Python bindings for YARA
 RUN git clone --recursive https://github.com/VirusTotal/yara-python && \
@@ -72,7 +73,8 @@ WORKDIR ${DEF_INSTALL_PREFIX}/lib
 RUN apk add --no-cache                  \
     python3                          && \
     apk add --no-cache --virtual .build \
-    git
+    git                              && \
+    python3 -m ensurepip --default-pip
 
 COPY --from=builder --chown="${DEF_USERNAME}:${DEF_USERNAME}" /tmp/build/yara-python yara-python
 
@@ -80,7 +82,7 @@ RUN find . -type d -exec chmod 755 {} \; && \
     find . -type f -exec chmod 644 {} \;
 
 # Install the Volatility 3 framework
-RUN git clone https://github.com/volatilityfoundation/volatility3.git && \
+RUN git clone https://github.com/volatilityfoundation/volatility3.git --single-branch --branch stable --depth 1 && \
     cd volatility3                                                    && \
     python3 setup.py install                                          && \
     ln -sf ${DEF_INSTALL_PREFIX}/bin/vol ${DEF_INSTALL_PREFIX}/bin/volatility

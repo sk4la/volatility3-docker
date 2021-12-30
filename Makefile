@@ -27,7 +27,7 @@ PRODUCT_BUILD_COMMIT:=$(shell git log --max-count=1 --pretty=format:%H)
 PRODUCT_BUILD_DATE:=$(shell TZ=Z date +"%FT%T%Z")
 PRODUCT_NAME=volatility3-docker
 PRODUCT_REPOSITORY=https://github.com/sk4la/volatility3-docker
-PRODUCT_VERSION?=0.2.0
+PRODUCT_VERSION?=0.2.1
 
 DOCKER_BIN=docker
 DOCKER_FLAGS+=
@@ -66,15 +66,17 @@ help:
 	$(info $(HELP_MENU))
 
 push:
-	$(DOCKER_BIN) image push \
-		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/dwarf2json:$(DOCKER_TAG)" \
-		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/dwarf2json:latest" \
-		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/pdbconv:$(DOCKER_TAG)" \
-		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/pdbconv:latest" \
-		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/volatility:$(DOCKER_TAG)" \
-		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/volatility:latest" \
-		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/volshell:$(DOCKER_TAG)" \
-		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/volshell:latest"
+	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/dwarf2json:$(DOCKER_TAG)"
+	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/dwarf2json:latest"
+
+	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/pdbconv:$(DOCKER_TAG)"
+	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/pdbconv:latest"
+
+	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/volatility:$(DOCKER_TAG)"
+	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/volatility:latest"
+
+	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/volshell:$(DOCKER_TAG)"
+	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/volshell:latest"
 
 save:
 	$(DOCKER_BIN) image save \

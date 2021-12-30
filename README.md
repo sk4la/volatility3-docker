@@ -2,7 +2,7 @@
 
 This repository hosts some ready-to-use Docker images based on [Alpine Linux](https://alpinelinux.org/) embedding the newest Volatility 3 framework. Check out the [official Volatility 3 repository](https://github.com/volatilityfoundation/volatility3/) for more information.
 
-Hmm, [why are these images not (yet) official?](https://github.com/volatilityfoundation/volatility3/pull/92)
+[Why are these images not (yet) official?](https://github.com/volatilityfoundation/volatility3/pull/92)
 
 > Be aware that debugging symbols are directly embedded into the images, which brings the size up for quite a bit. See [my pull request](https://github.com/volatilityfoundation/volatility3/pull/92) on the official repository for more details on this.
 

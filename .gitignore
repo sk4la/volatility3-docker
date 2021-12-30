@@ -1,8 +1,19 @@
-.DS_Store
+/**
 
-data/
-__pycache__/
-.vscode/
+!/dwarf2json/
+!/dwarf2json/**
 
-*.env
-*.old
+!/pdbconv/
+!/pdbconv/**
+
+!/volatility/
+!/volatility/**
+
+!/volshell/
+!/volshell/**
+
+!/.gitattributes
+!/.gitignore
+!/LICENSE
+!/Makefile
+!/README.md

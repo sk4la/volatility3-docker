@@ -25,7 +25,7 @@
 # Maintained by sk4la <sk4la.box@gmail.com>.
 #
 # To build:
-#   $ docker build -t sk4la/volatility:latest .
+#   $ docker build -t sk4la/volatility3:latest .
 #
 # Additionaly, one can set the following build arguments (using the --build-arg option) to customize the build:
 #   - ALPINE_VERSION [3.15]
@@ -33,8 +33,8 @@
 #   - INSTALL_USER [root]
 #
 # To run as a standalone container:
-#   $ docker run -v $PWD:/case:ro --rm --cap-drop ALL sk4la/volatility
-#   $ docker run -v $PWD:/case:ro --rm --cap-drop ALL sk4la/volatility -f /case/volatile.dmp windows.info
+#   $ docker run -v $PWD:/case:ro --rm --cap-drop ALL sk4la/volatility3
+#   $ docker run -v $PWD:/case:ro --rm --cap-drop ALL sk4la/volatility3 -f /case/volatile.dmp windows.info
 #
 # One can also remove the ":ro" suffix (in the -v option) to allow writing to disk.
 #

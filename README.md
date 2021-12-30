@@ -23,13 +23,14 @@ All images are available of Docker Hub:
 
 - [`sk4la/dwarf2json`](https://hub.docker.com/repository/docker/sk4la/dwarf2json)
 - [`sk4la/pdbconv`](https://hub.docker.com/repository/docker/sk4la/pdbconv)
-- [`sk4la/volatility`](https://hub.docker.com/repository/docker/sk4la/volatility)
+- [`sk4la/volatility3`](https://hub.docker.com/repository/docker/sk4la/volatility3)
+- [`sk4la/volatility`](https://hub.docker.com/repository/docker/sk4la/volatility) (only for backward compatibility)
 - [`sk4la/volshell`](https://hub.docker.com/repository/docker/sk4la/volshell)
 
 Pulling an image locally is as simple as:
 
 ```sh
-docker pull sk4la/volatility
+docker pull sk4la/volatility3
 ```
 
 ### Basic usage
@@ -39,7 +40,7 @@ Once the images have been pulled (or built), they can be instanciated inside fre
 ```sh
 docker run -v $PWD:/case --rm sk4la/dwarf2json
 docker run -v $PWD:/case --rm sk4la/pdbconv
-docker run -v $PWD:/case --rm sk4la/volatility
+docker run -v $PWD:/case --rm sk4la/volatility3
 docker run -v $PWD:/case --rm -it sk4la/volshell
 ```
 

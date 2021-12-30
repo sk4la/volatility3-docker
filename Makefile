@@ -8,7 +8,7 @@ define HELP_MENU
 Usage: make <env> <target> <target>...
 
 Main targets:
-  all                 Call the default targets. [dwarf2json pdbconv volatility volshell]
+  all                 Call the default targets. [dwarf2json pdbconv volatility3 volshell]
   help                Show this help.
   push                Push all Docker images.
   save                Save all Docker images as a compressed archive.
@@ -16,7 +16,7 @@ Main targets:
 Development targets:
   dwarf2json          Build the Docker image for "dwarf2json".
   pdbconv             Build the Docker image for "pdbconv".
-  volatility          Build the Docker image for "volatility".
+  volatility3         Build the Docker image for "volatility3".
   volshell            Build the Docker image for "volshell".
 
 Refer to the documentation for use cases and examples.
@@ -27,7 +27,7 @@ PRODUCT_BUILD_COMMIT:=$(shell git log --max-count=1 --pretty=format:%H)
 PRODUCT_BUILD_DATE:=$(shell TZ=Z date +"%FT%T%Z")
 PRODUCT_NAME=volatility3-docker
 PRODUCT_REPOSITORY=https://github.com/sk4la/volatility3-docker
-PRODUCT_VERSION?=0.2.1
+PRODUCT_VERSION?=0.2.2
 
 DOCKER_BIN=docker
 DOCKER_FLAGS+=
@@ -40,9 +40,9 @@ ALPINE_VERSION=3.15
 INSTALL_PREFIX=/usr
 INSTALL_USER=root
 
-TARGETS:=$(wildcard dwarf2json pdbconv volatility volshell)
+TARGETS:=$(wildcard dwarf2json pdbconv volatility3 volshell)
 
-.PHONY: all dwarf2json help pdbconv push save volatility volshell
+.PHONY: all dwarf2json help pdbconv push save volatility3 volshell
 
 all: $(TARGETS)
 
@@ -72,8 +72,8 @@ push:
 	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/pdbconv:$(DOCKER_TAG)"
 	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/pdbconv:latest"
 
-	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/volatility:$(DOCKER_TAG)"
-	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/volatility:latest"
+	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/volatility3:$(DOCKER_TAG)"
+	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/volatility3:latest"
 
 	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/volshell:$(DOCKER_TAG)"
 	$(DOCKER_BIN) image push "$(DOCKER_REGISTRY)/$(DOCKER_USER)/volshell:latest"
@@ -82,6 +82,6 @@ save:
 	$(DOCKER_BIN) image save \
 		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/dwarf2json:$(DOCKER_TAG)" \
 		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/pdbconv:$(DOCKER_TAG)" \
-		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/volatility:$(DOCKER_TAG)" \
+		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/volatility3:$(DOCKER_TAG)" \
 		"$(DOCKER_REGISTRY)/$(DOCKER_USER)/volshell:$(DOCKER_TAG)" \
 		| gzip > "$(DOCKER_USER)-$(PRODUCT_NAME).tar.gz"

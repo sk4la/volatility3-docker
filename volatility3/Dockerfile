@@ -117,6 +117,9 @@ RUN apk add --no-cache \
 
 RUN python3 -m ensurepip --default-pip && \
     python3 -m pip install --no-cache --upgrade \
+        wheel && \
+    python3 -m pip install --no-cache --upgrade \
+        pefile \
         pycryptodome
 
 COPY --from=stage --chown="${INSTALL_USER}:${INSTALL_USER}" \

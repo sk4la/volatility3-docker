@@ -60,7 +60,7 @@ Building the complete lab is as simple as:
 git clone https://github.com/sk4la/volatility3-docker.git && make -C volatility3-docker
 ```
 
-> Note that these images are somewhat heavy (~2GB) since they embed some of the kernel [debug symbols](https://en.wikipedia.org/wiki/Debug_symbol/) for GNU/Linux, macOS and Microsoft Windows.
+> Note that these images are somewhat heavy (~2GB) since they embed some of the kernel [debug symbols](https://en.wikipedia.org/wiki/Debug_symbol/) for GNU/Linux, macOS and Microsoft Windows. Depending on your needs, more symbols could even be dowloaded from the [ISF Server](https://isf-server.techanarchy.net/).
 
 ### Customization
 

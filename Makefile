@@ -27,7 +27,7 @@ PRODUCT_BUILD_COMMIT:=$(shell git log --max-count=1 --pretty=format:%H)
 PRODUCT_BUILD_DATE:=$(shell TZ=Z date +"%FT%T%Z")
 PRODUCT_NAME=volatility3-docker
 PRODUCT_REPOSITORY=https://github.com/sk4la/volatility3-docker
-PRODUCT_VERSION?=0.2.2
+PRODUCT_VERSION?=0.2.3
 
 DOCKER_BIN=docker
 DOCKER_FLAGS+=

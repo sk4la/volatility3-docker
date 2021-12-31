@@ -131,7 +131,7 @@ RUN find . -type d -exec chmod 0755 "{}" \; && \
     find . -type f -exec chmod 0644 "{}" \;
 
 # Install the Volatility 3 framework
-RUN git clone --branch=stable --depth=1 --single-branch \
+RUN git clone --branch="release/v2.0.0" --depth=1 --single-branch \
         https://github.com/volatilityfoundation/volatility3.git
 
 WORKDIR "${INSTALL_PREFIX}/lib/volatility3"

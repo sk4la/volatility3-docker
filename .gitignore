@@ -1,16 +1,10 @@
 /**
 
-!/dwarf2json/
-!/dwarf2json/**
+!/.github/
+!/.github/**
 
-!/pdbconv/
-!/pdbconv/**
-
-!/volatility3/
-!/volatility3/**
-
-!/volshell/
-!/volshell/**
+!/src/
+!/src/**
 
 !/.gitattributes
 !/.gitignore

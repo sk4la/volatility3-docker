@@ -1,6 +1,8 @@
 name: volatility3-stable
 
 on:
+  schedule:
+    - cron: 0 2 * * *
   push:
     branches:
       - master

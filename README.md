@@ -1,10 +1,10 @@
 # Volatility, on Docker 🐳
 
-This repository hosts some ready-to-use Docker images based on [Alpine Linux](https://alpinelinux.org/) embedding the newest Volatility 3 framework. Check out the [official Volatility 3 repository](https://github.com/volatilityfoundation/volatility3/) for more information.
+This repository hosts some ready-to-use Docker images based on [Alpine Linux](https://alpinelinux.org/) embedding the Volatility framework, including the newest Volatility 3 framework. Check out the official [Volatility](https://github.com/volatilityfoundation/volatility/) and [Volatility 3](https://github.com/volatilityfoundation/volatility3/) repositories for more information.
 
 [Why are these images not (yet) official?](https://github.com/volatilityfoundation/volatility3/pull/92)
 
-> Be aware that debugging symbols are directly embedded into the images, which brings the size up for quite a bit. See [my pull request](https://github.com/volatilityfoundation/volatility3/pull/92) on the official repository for more details on this.
+> Be aware that debugging symbols for Volatility 3 are directly embedded into the images, which brings the size up for quite a bit. See [my pull request](https://github.com/volatilityfoundation/volatility3/pull/92) on the official repository for more details on this.
 
 ## Table of contents
 
@@ -19,9 +19,9 @@ All images are available of Docker Hub:
 
 - [`sk4la/dwarf2json`](https://hub.docker.com/repository/docker/sk4la/dwarf2json)
 - [`sk4la/volatility3`](https://hub.docker.com/repository/docker/sk4la/volatility3)
-- [`sk4la/pdbconv`](https://hub.docker.com/repository/docker/sk4la/pdbconv) (only for backward compatibility, please consider `--entrypoint=pdbconv` from now on)
-- [`sk4la/volatility`](https://hub.docker.com/repository/docker/sk4la/volatility) (only for backward compatibility, moved to `sk4la/volatility3` for better coherence)
-- [`sk4la/volshell`](https://hub.docker.com/repository/docker/sk4la/volshell) (only for backward compatibility, please consider `--entrypoint=volshell` from now on)
+- [`sk4la/pdbconv`](https://hub.docker.com/repository/docker/sk4la/pdbconv) (only for backward compatibility, replaced by `docker run --entrypoint pdbconv sk4la/volatility3`)
+- [`sk4la/volatility`](https://hub.docker.com/repository/docker/sk4la/volatility) (only for backward compatibility, moved to `sk4la/volatility3`)
+- [`sk4la/volshell`](https://hub.docker.com/repository/docker/sk4la/volshell) (only for backward compatibility, replaced by `docker run --entrypoint volshell sk4la/volatility3`)
 
 Building and/or using these images requires Docker to be installed on the system. Please refer to the [official documentation](https://docs.docker.com/) for more details on how to install the Docker toolchain.
 

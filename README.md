@@ -15,13 +15,16 @@ This repository hosts some ready-to-use Docker images based on [Alpine Linux](ht
 
 ## Getting started
 
-All images are available of Docker Hub:
+All images are available on Docker Hub:
 
-- [`sk4la/dwarf2json`](https://hub.docker.com/repository/docker/sk4la/dwarf2json)
 - [`sk4la/volatility3`](https://hub.docker.com/repository/docker/sk4la/volatility3)
-- [`sk4la/pdbconv`](https://hub.docker.com/repository/docker/sk4la/pdbconv) (only for backward compatibility, replaced by `docker run --entrypoint pdbconv sk4la/volatility3`)
-- [`sk4la/volatility`](https://hub.docker.com/repository/docker/sk4la/volatility) (only for backward compatibility, moved to `sk4la/volatility3`)
-- [`sk4la/volshell`](https://hub.docker.com/repository/docker/sk4la/volshell) (only for backward compatibility, replaced by `docker run --entrypoint volshell sk4la/volatility3`)
+- [`sk4la/dwarf2json`](https://hub.docker.com/repository/docker/sk4la/dwarf2json)
+
+The following are old images that are only here for backward compatibility (you should not use these):
+
+- [`sk4la/volatility`](https://hub.docker.com/repository/docker/sk4la/volatility): moved to `sk4la/volatility3` for coherence with the Volatility naming convention
+- [`sk4la/volshell`](https://hub.docker.com/repository/docker/sk4la/volshell): replaced by `sk4la/volatility3` with `--entrypoint volshell`
+- [`sk4la/pdbconv`](https://hub.docker.com/repository/docker/sk4la/pdbconv): replaced by `sk4la/volatility3` with `--entrypoint pdbconv`
 
 Building and/or using these images requires Docker to be installed on the system. Please refer to the [official documentation](https://docs.docker.com/) for more details on how to install the Docker toolchain.
 
@@ -50,4 +53,4 @@ In case you encounter a problem or want to suggest a new feature, please [submit
 
 ## License
 
-This piece of software is licensed under the [​Volatility Software License](https://www.volatilityfoundation.org/license/).
+This piece of software is licensed under the [Volatility Software License](https://www.volatilityfoundation.org/license/).

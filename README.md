@@ -1,4 +1,4 @@
-# Volatility 3, on Docker 🐳
+# Volatility, on Docker 🐳
 
 This repository hosts some ready-to-use Docker images based on [Alpine Linux](https://alpinelinux.org/) embedding the newest Volatility 3 framework. Check out the [official Volatility 3 repository](https://github.com/volatilityfoundation/volatility3/) for more information.
 
@@ -10,10 +10,6 @@ This repository hosts some ready-to-use Docker images based on [Alpine Linux](ht
 
 - [Getting started](#getting-started)
   - [Basic usage](#basic-usage)
-- [Advanced usage](#advanced-usage)
-  - [Requirements](#requirements)
-  - [Building the images](#building-the-images)
-  - [Customization](#customization)
 - [Support](#support)
 - [License](#license)
 
@@ -22,10 +18,12 @@ This repository hosts some ready-to-use Docker images based on [Alpine Linux](ht
 All images are available of Docker Hub:
 
 - [`sk4la/dwarf2json`](https://hub.docker.com/repository/docker/sk4la/dwarf2json)
-- [`sk4la/pdbconv`](https://hub.docker.com/repository/docker/sk4la/pdbconv)
 - [`sk4la/volatility3`](https://hub.docker.com/repository/docker/sk4la/volatility3)
-- [`sk4la/volatility`](https://hub.docker.com/repository/docker/sk4la/volatility) (only for backward compatibility)
-- [`sk4la/volshell`](https://hub.docker.com/repository/docker/sk4la/volshell)
+- [`sk4la/pdbconv`](https://hub.docker.com/repository/docker/sk4la/pdbconv) (only for backward compatibility, please consider `--entrypoint=pdbconv` from now on)
+- [`sk4la/volatility`](https://hub.docker.com/repository/docker/sk4la/volatility) (only for backward compatibility, moved to `sk4la/volatility3` for better coherence)
+- [`sk4la/volshell`](https://hub.docker.com/repository/docker/sk4la/volshell) (only for backward compatibility, please consider `--entrypoint=volshell` from now on)
+
+Building and/or using these images requires Docker to be installed on the system. Please refer to the [official documentation](https://docs.docker.com/) for more details on how to install the Docker toolchain.
 
 Pulling an image locally is as simple as:
 
@@ -38,37 +36,13 @@ docker pull sk4la/volatility3
 Once the images have been pulled (or built), they can be instanciated inside fresh containers using:
 
 ```sh
-docker run -v $PWD:/case --rm sk4la/dwarf2json
-docker run -v $PWD:/case --rm sk4la/pdbconv
-docker run -v $PWD:/case --rm sk4la/volatility3
-docker run -v $PWD:/case --rm -it sk4la/volshell
+docker run -v $PWD:/workspace sk4la/dwarf2json
+docker run -v $PWD:/workspace sk4la/volatility3
+docker run -v $PWD:/workspace --entrypoint volshell -it sk4la/volatility3
+docker run -v $PWD:/workspace --entrypoint pdbconv sk4la/volatility3
 ```
 
 > Note that every artifact will be lost unless stored using a [volume](https://docs.docker.com/storage/volumes/) or [bind mount](https://docs.docker.com/storage/bind-mounts/).
-
-## Advanced usage
-
-### Requirements
-
-Building and/or using these images requires Docker to be installed on the system. Please refer to the [official documentation](https://docs.docker.com/) for more details on how to install the Docker toolchain.
-
-### Building the images
-
-Building the complete lab is as simple as:
-
-```sh
-git clone https://github.com/sk4la/volatility3-docker.git && make -C volatility3-docker
-```
-
-> Note that these images are somewhat heavy (~2GB) since they embed some of the kernel [debug symbols](https://en.wikipedia.org/wiki/Debug_symbol/) for GNU/Linux, macOS and Microsoft Windows. Depending on your needs, more symbols could even be dowloaded from the [ISF Server](https://isf-server.techanarchy.net/).
-
-### Customization
-
-Customizing the build is allowed through several environment variables:
-
-- `ALPINE_VERSION` (defaults to `3.15`)
-- `INSTALL_PREFIX` (defaults to `/usr`)
-- `INSTALL_USER` (defaults to `root`)
 
 ## Support
 
@@ -76,4 +50,4 @@ In case you encounter a problem or want to suggest a new feature, please [submit
 
 ## License
 
-This piece of software is licensed under the [MIT License](https://github.com/sk4la/volatility3-docker/blob/master/LICENSE).
+This piece of software is licensed under the [​Volatility Software License](https://www.volatilityfoundation.org/license/).

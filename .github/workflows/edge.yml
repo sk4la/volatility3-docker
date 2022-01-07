@@ -39,7 +39,7 @@ jobs:
           context: src/dwarf2json
           push: true
           tags: sk4la/dwarf2json:${{ env.DOCKER_TAG_DWARF2JSON }}
-          buildArgs: |
+          build-args: |
             ALPINE_VERSION=${{ env.DOCKER_TAG_ALPINE }}
             BUILD_DATE=${{ steps.date.outputs.date }}
             BUILD_COMMIT=${{ env.GITHUB_SHA }}
@@ -59,7 +59,7 @@ jobs:
           context: src/volatility3
           push: true
           tags: sk4la/volatility3:${{ env.DOCKER_TAG_VOLATILITY3 }}
-          buildArgs: |
+          build-args: |
             ALPINE_VERSION=${{ env.DOCKER_TAG_ALPINE }}
             BUILD_DATE=${{ steps.date.outputs.date }}
             BUILD_COMMIT=${{ env.GITHUB_SHA }}

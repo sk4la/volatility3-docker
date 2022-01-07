@@ -1,4 +1,4 @@
-name: Edge CI
+name: dwarf2json-stable
 
 on:
   push:
@@ -7,11 +7,8 @@ on:
 
 env:
   DOCKER_TAG_ALPINE: "3.15"
-  DOCKER_TAG_DWARF2JSON: edge
-  DOCKER_TAG_VOLATILITY3: edge
+  DOCKER_TAG_DWARF2JSON: "0.6.0"
   GIT_TAG_DWARF2JSON: master
-  GIT_TAG_PYTHON_YARA: v4.1.3
-  GIT_TAG_VOLATILITY3: release/v2.0.0
 
 jobs:
   docker:
@@ -38,7 +35,10 @@ jobs:
         with:
           context: src/dwarf2json
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:${{ env.DOCKER_TAG_DWARF2JSON }}
+          tags: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:${{ env.DOCKER_TAG_DWARF2JSON }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:stable
+            ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:latest
           build-args: |
             ALPINE_VERSION=${{ env.DOCKER_TAG_ALPINE }}
             BUILD_DATE=${{ steps.date.outputs.date }}
@@ -51,25 +51,4 @@ jobs:
       #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
       #     password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       #     repository: ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
-      #     short-description: ${{ github.event.repository.description }}
-
-      - name: Build and push ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3
-        uses: docker/build-push-action@v2
-        with:
-          context: src/volatility3
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:${{ env.DOCKER_TAG_VOLATILITY3 }}
-          build-args: |
-            ALPINE_VERSION=${{ env.DOCKER_TAG_ALPINE }}
-            BUILD_DATE=${{ steps.date.outputs.date }}
-            BUILD_COMMIT=${{ env.GITHUB_SHA }}
-            GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}
-            GIT_TAG_VOLATILITY3=${{ env.GIT_TAG_VOLATILITY3 }}
-
-      # - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3
-      #   uses: peter-evans/dockerhub-description@v2
-      #   with:
-      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
-      #     password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      #     repository: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3
       #     short-description: ${{ github.event.repository.description }}

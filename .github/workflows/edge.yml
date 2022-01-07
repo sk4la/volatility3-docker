@@ -3,7 +3,7 @@ name: Edge
 on:
   push:
     branches:
-      - main
+      - master
 
 env:
   DOCKER_TAG_ALPINE: "3.15"

@@ -2,7 +2,7 @@ name: dwarf2json-stable
 
 on:
   schedule:
-    - cron: 0 2 * * *
+    - cron: 0 2 * * 0
   push:
     branches:
       - master

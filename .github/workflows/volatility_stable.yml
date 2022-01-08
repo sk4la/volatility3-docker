@@ -11,7 +11,7 @@ env:
   DOCKER_TAG_ALPINE: "3.15"
   DOCKER_TAG_VOLATILITY: "2.6.1"
   GIT_TAG_PYTHON_YARA: v4.1.3
-  GIT_TAG_VOLATILITY3: "2.6.1"
+  GIT_TAG_VOLATILITY: "2.6.1"
 
 jobs:
   docker:
@@ -39,7 +39,7 @@ jobs:
           context: src/volatility
           push: true
           tags: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:${{ env.DOCKER_TAG_VOLATILITY3 }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:${{ env.DOCKER_TAG_VOLATILITY }}
             ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:stable
             ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:latest
           build-args: |

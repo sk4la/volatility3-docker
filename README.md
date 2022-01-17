@@ -17,10 +17,9 @@ This repository hosts some ready-to-use Docker images based on [Alpine Linux](ht
 
 All images are available on Docker Hub:
 
-- [![`sk4la/volatility3:edge`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility3-edge?label=sk4la/volatility3:edge&style=flat-square)](https://hub.docker.com/r/sk4la/volatility3) (newest addition for Volatility3 v2.0.0 preview! 🔥)
-- [![`sk4la/volatility3:stable`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility3-stable?label=sk4la/volatility3:stable&style=flat-square)](https://hub.docker.com/r/sk4la/volatility3)
-- [![`sk4la/dwarf2json:stable`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/dwarf2json-stable?label=sk4la/dwarf2json:stable&style=flat-square)](https://hub.docker.com/r/sk4la/dwarf2json)
-- [![`sk4la/volatility:stable`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility-stable?label=sk4la/volatility:stable&style=flat-square)](https://hub.docker.com/r/sk4la/volatility)
+- [![`sk4la/volatility3`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility3-stable?label=sk4la/volatility3:stable&style=flat-square)](https://hub.docker.com/r/sk4la/volatility3)
+- [![`sk4la/dwarf2json`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/dwarf2json-stable?label=sk4la/dwarf2json:stable&style=flat-square)](https://hub.docker.com/r/sk4la/dwarf2json)
+- [![`sk4la/volatility`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility-stable?label=sk4la/volatility:stable&style=flat-square)](https://hub.docker.com/r/sk4la/volatility)
 
 Building and/or using these images requires Docker to be installed on the system. Please refer to the [official documentation](https://docs.docker.com/) for more details on how to install and use the Docker toolchain.
 

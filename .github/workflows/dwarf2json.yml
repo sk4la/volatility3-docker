@@ -1,8 +1,8 @@
-name: dwarf2json-stable
+name: dwarf2json
 
 on:
   schedule:
-    - cron: 0 2 * * 0
+    - cron: 0 2 * * 1,3,5
   push:
     branches:
       - master
@@ -47,10 +47,10 @@ jobs:
             BUILD_COMMIT=${{ env.GITHUB_SHA }}
             GIT_TAG_DWARF2JSON=${{ env.GIT_TAG_DWARF2JSON }}
 
-      # - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
-      #   uses: peter-evans/dockerhub-description@v2
-      #   with:
-      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
-      #     password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      #     repository: ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
-      #     short-description: ${{ github.event.repository.description }}
+      - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          repository: ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
+          short-description: ${{ github.event.repository.description }}

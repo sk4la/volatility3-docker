@@ -4,22 +4,15 @@ This repository hosts some ready-to-use Docker images based on [Alpine Linux](ht
 
 [Why are these images not (yet) official?](https://github.com/volatilityfoundation/volatility3/pull/92)
 
-> Be aware that debugging symbols for Volatility 3 are directly embedded into the images, which brings the size up for quite a bit. See [my pull request](https://github.com/volatilityfoundation/volatility3/pull/92) on the official repository for more details on this.
-
-## Table of contents
-
-- [Getting started](#getting-started)
-  - [Basic usage](#basic-usage)
-- [Support](#support)
-- [License](#license)
-
 ## Getting started
 
-All images are available on Docker Hub:
+All images are directly available on Docker Hub:
 
-- [![`sk4la/volatility3`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility3-stable?label=sk4la/volatility3:stable&style=flat-square)](https://hub.docker.com/r/sk4la/volatility3)
-- [![`sk4la/dwarf2json`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/dwarf2json-stable?label=sk4la/dwarf2json:stable&style=flat-square)](https://hub.docker.com/r/sk4la/dwarf2json)
-- [![`sk4la/volatility`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility-stable?label=sk4la/volatility:stable&style=flat-square)](https://hub.docker.com/r/sk4la/volatility)
+- [![`sk4la/volatility3`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility3?label=sk4la/volatility3&style=flat-square)](https://hub.docker.com/r/sk4la/volatility3)
+- [![`sk4la/dwarf2json`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/dwarf2json?label=sk4la/dwarf2json&style=flat-square)](https://hub.docker.com/r/sk4la/dwarf2json)
+- [![`sk4la/volatility`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility?label=sk4la/volatility&style=flat-square)](https://hub.docker.com/r/sk4la/volatility)
+
+> Be aware that debugging symbols for Volatility 3 are embedded into the images, which brings the size up for quite a bit. See [my pull request](https://github.com/volatilityfoundation/volatility3/pull/92) on the official repository for more details on this.
 
 Building and/or using these images requires Docker to be installed on the system. Please refer to the [official documentation](https://docs.docker.com/) for more details on how to install and use the Docker toolchain.
 
@@ -35,7 +28,7 @@ docker run -v $PWD:/workspace --entrypoint volshell -it sk4la/volatility3
 docker run -v $PWD:/workspace --entrypoint pdbconv sk4la/volatility3
 ```
 
-> Note that every artifact will be lost unless stored using a [volume](https://docs.docker.com/storage/volumes/) or [bind mount](https://docs.docker.com/storage/bind-mounts/).
+Note that every artifact will be lost unless stored using a [volume](https://docs.docker.com/storage/volumes/) or [bind mount](https://docs.docker.com/storage/bind-mounts/).
 
 ## Support
 

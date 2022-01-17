@@ -8,27 +8,39 @@ This repository hosts some ready-to-use Docker images based on [Alpine Linux](ht
 
 All images are directly available on Docker Hub:
 
-- [![`sk4la/volatility3`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility3?label=sk4la/volatility3&style=flat-square)](https://hub.docker.com/r/sk4la/volatility3)
-- [![`sk4la/dwarf2json`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/dwarf2json?label=sk4la/dwarf2json&style=flat-square)](https://hub.docker.com/r/sk4la/dwarf2json)
-- [![`sk4la/volatility`](https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility?label=sk4la/volatility&style=flat-square)](https://hub.docker.com/r/sk4la/volatility)
-
-> Be aware that debugging symbols for Volatility 3 are embedded into the images, which brings the size up for quite a bit. See [my pull request](https://github.com/volatilityfoundation/volatility3/pull/92) on the official repository for more details on this.
+<p align="center">
+  <a href="https://hub.docker.com/r/sk4la/dwarf2json"><img alt="sk4la/dwarf2json" src="https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/dwarf2json?label=sk4la/dwarf2json&style=for-the-badge"/></a>
+  <a href="https://hub.docker.com/r/sk4la/volatility"><img alt="sk4la/volatility" src="https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility?label=sk4la/volatility&style=for-the-badge"/></a>
+  <a href="https://hub.docker.com/r/sk4la/volatility3"><img alt="sk4la/volatility3" src="https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility3?label=sk4la/volatility3&style=for-the-badge"/></a>
+</p>
 
 Building and/or using these images requires Docker to be installed on the system. Please refer to the [official documentation](https://docs.docker.com/) for more details on how to install and use the Docker toolchain.
 
+> Be aware that debugging symbols for Volatility 3 are embedded into the images, which brings the size up for quite a bit. See [my pull request](https://github.com/volatilityfoundation/volatility3/pull/92) on the official repository for more details on this.
+
 ### Basic usage
 
-Once the images have been pulled (or built), they can be instanciated inside fresh containers using:
+Once the images have been pulled (or built), they can be instanciated inside fresh containers using `docker run`, for example:
 
 ```sh
-docker run -v $PWD:/workspace sk4la/dwarf2json
-docker run -v $PWD:/workspace sk4la/volatility
-docker run -v $PWD:/workspace sk4la/volatility3
-docker run -v $PWD:/workspace --entrypoint volshell -it sk4la/volatility3
-docker run -v $PWD:/workspace --entrypoint pdbconv sk4la/volatility3
+docker run --volume $PWD:/case:ro sk4la/volatility3
 ```
 
-Note that every artifact will be lost unless stored using a [volume](https://docs.docker.com/storage/volumes/) or [bind mount](https://docs.docker.com/storage/bind-mounts/).
+Or a more complete example:
+
+```sh
+docker run --volume $PWD:/case:ro sk4la/volatility3 --file /case/volatile.mem windows.pslist.PsList
+```
+
+In order to use the Volatility shell (a.k.a. the [volshell](https://volatility3.readthedocs.io/en/latest/volshell.html)) or other entrypoints, use the `--entrypoint` option when instanciating the container:
+
+```sh
+docker run --entrypoint volshell --interactive --tty --volume $PWD:/case:ro sk4la/volatility3
+```
+
+> The `--interactive` and `--tty` options are needed in order to keep the terminal open while interacting with the containerized application.
+
+Note that every artifact will be lost unless stored using a [volume](https://docs.docker.com/storage/volumes/) or [bind mount](https://docs.docker.com/storage/bind-mounts/) (as demonstrated here using the `--volume` option).
 
 ## Support
 

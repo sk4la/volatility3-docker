@@ -29,12 +29,17 @@ RUN python3 setup.py build
 
 WORKDIR /stage
 
-RUN curl -fL https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip -o windows.zip && \
-    unzip windows.zip && \
-    curl -fL https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip -o linux.zip && \
-    unzip linux.zip && \
-    curl -fL https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip -o mac.zip && \
-    unzip mac.zip -d mac
+RUN curl --location --max-redirs 1 \
+        https://downloads.volatilityfoundation.org/volatility3/symbols/windows.zip \
+            --output windows.zip \
+        https://downloads.volatilityfoundation.org/volatility3/symbols/linux.zip \
+            --output linux.zip \
+        https://downloads.volatilityfoundation.org/volatility3/symbols/mac.zip \
+            --output mac.zip \
+        https://downloads.volatilityfoundation.org/volatility3/symbols/SHA256SUMS \
+            --output symbols.sha256 && \
+    sha256sum -c \
+        symbols.sha256
 
 RUN apk --purge del \
         .build
@@ -54,6 +59,7 @@ RUN addgroup -S "${INSTALL_GROUP}" && \
     adduser -DG -S "${INSTALL_USER}" -G "${INSTALL_GROUP}" -g "Unprivileged user,,,,"
 
 RUN apk add --no-cache \
+        capstone \
         python3 && \
     apk add --no-cache --virtual=.build \
         gcc \
@@ -106,20 +112,20 @@ RUN apk --purge del \
 
 WORKDIR "${INSTALL_PREFIX}/lib/volatility3/volatility3/symbols"
 
-COPY --from=stage --chown="${INSTALL_USER}:${INSTALL_GROUP}" \
-         /stage/linux \
-         linux
+COPY --from=stage \
+         /stage/linux.zip \
+         linux.zip
 
-COPY --from=stage --chown="${INSTALL_USER}:${INSTALL_GROUP}" \
-         /stage/mac \
-         mac
+COPY --from=stage \
+         /stage/mac.zip \
+         mac.zip
 
-COPY --from=stage --chown="${INSTALL_USER}:${INSTALL_GROUP}" \
-         /stage/windows \
-         windows
+COPY --from=stage \
+         /stage/windows.zip \
+         windows.zip
 
-RUN find . -type d -exec chmod 0755 "{}" \; && \
-    find . -type f -exec chmod 0644 "{}" \;
+RUN find . -type d -exec chmod 0777 "{}" \; && \
+    find . -type f -exec chmod 0666 "{}" \;
 
 WORKDIR "${INSTALL_PREFIX}"
 

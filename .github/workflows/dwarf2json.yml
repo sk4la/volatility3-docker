@@ -43,9 +43,9 @@ jobs:
             ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:latest
           build-args: |
             ALPINE_VERSION=${{ env.DOCKER_TAG_ALPINE }}
-            BUILD_DATE=${{ steps.date.outputs.date }}
-            BUILD_COMMIT=${{ env.GITHUB_SHA }}
             GIT_TAG_DWARF2JSON=${{ env.GIT_TAG_DWARF2JSON }}
+            PRODUCT_BUILD_COMMIT=${{ env.GITHUB_SHA }}
+            PRODUCT_BUILD_DATE=${{ steps.date.outputs.date }}
 
       - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
         uses: peter-evans/dockerhub-description@v2

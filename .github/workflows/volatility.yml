@@ -1,8 +1,6 @@
 name: volatility
 
 on:
-  schedule:
-    - cron: 0 2 * * 1
   push:
     branches:
       - master

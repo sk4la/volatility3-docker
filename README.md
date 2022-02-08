@@ -52,7 +52,10 @@ These images can be used interactively or as a throwaway solution for punctual p
 
 > As determining the correct memory layout usually takes a bit of time, running Volatility interactively (i.e. instantiating the container using the `--interactive` flag) is preferred, although retrieving the configuration file using a volume is also possible.
 
-### Practical example #1: Interactive
+<details>
+  <summary>Example #1: Interactive session using Volatility3 command-line interface (CLI)</summary>
+
+### Example #1: Interactive session using Volatility3 command-line interface (CLI)
 
 The following is a practical example of using Volatility 3 (and more precisely the `sk4la/volatility3` Docker image) to dump a process executable from a volatile memory image.
 
@@ -133,6 +136,8 @@ The binary sample should reside in the `~/workspace/volatile.mem.dat` directory,
 Actually, all _dumper_ plugins (i.e. a Volatility plugin that is able to dump raw content from the memory image) should support the `--output-dir` option, which is quite convenient in an analysis workflow.
 
 > Volatility is verbose but not necessarily precise when it comes to errors. When an error is raised, you should always increase the verbosity level (using `-vvv` for example) in order to get maximum details about what is going on, and eventually submit an issue on [the official Volatility 3 repository](https://github.com/volatilityfoundation/volatility3/issues) if you deem it necessary.
+
+</details>
 
 ## Support
 

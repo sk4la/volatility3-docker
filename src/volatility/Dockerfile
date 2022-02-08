@@ -19,7 +19,7 @@ RUN python3 -m ensurepip --default-pip
 
 WORKDIR /stage
 
-RUN git clone --branch="${GIT_TAG_PYTHON_YARA}" --depth=1 --recursive --single-branch \
+RUN git clone --branch="${GIT_TAG_PYTHON_YARA}" --recursive --single-branch \
         https://github.com/VirusTotal/yara-python
 
 WORKDIR /stage/yara-python

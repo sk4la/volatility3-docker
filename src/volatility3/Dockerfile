@@ -6,6 +6,7 @@ ARG ALPINE_VERSION
 
 FROM "alpine:${ALPINE_VERSION}" AS stage
 
+ARG GIT_TAG_JPCERT_SYMBOLS="main"
 ARG GIT_TAG_PYTHON_YARA="master"
 
 RUN apk add --no-cache --virtual=.build \
@@ -20,7 +21,11 @@ RUN python3 -m ensurepip --default-pip
 
 WORKDIR /stage
 
-RUN git clone --branch="${GIT_TAG_PYTHON_YARA}" --depth=1 --recursive --single-branch \
+RUN git clone --branch="${GIT_TAG_JPCERT_SYMBOLS}" --recursive --single-branch \
+    https://github.com/JPCERTCC/Windows-Symbol-Tables.git \
+    symbols
+
+RUN git clone --branch="${GIT_TAG_PYTHON_YARA}" --recursive --single-branch \
         https://github.com/VirusTotal/yara-python
 
 WORKDIR /stage/yara-python
@@ -124,8 +129,13 @@ COPY --from=stage \
          /stage/windows.zip \
          windows.zip
 
+COPY --from=stage \
+         /stage/symbols/symbols/windows \
+         windows
+
 RUN find . -type d -exec chmod 0777 "{}" \; && \
-    find . -type f -exec chmod 0666 "{}" \;
+    find . -type f -exec chmod 0666 "{}" \; && \
+    find /usr/lib/python3* -type d -name symbols -exec chmod 0777 "{}" \;
 
 WORKDIR "${INSTALL_PREFIX}"
 

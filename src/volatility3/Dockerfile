@@ -108,7 +108,10 @@ RUN python3 setup.py install && \
     do ln -sf \
         "${INSTALL_PREFIX}/lib/volatility3/vol.py" \
         "${INSTALL_PREFIX}/bin/${destination}"; \
-    done
+    done && \
+    ln -sf \
+        "${INSTALL_PREFIX}/lib/volatility3/volatility3/framework/symbols/windows/pdbconv.py" \
+        "${INSTALL_PREFIX}/bin/pdbconv"
 
 ENV PATH="${INSTALL_PREFIX}/bin:${PATH}"
 

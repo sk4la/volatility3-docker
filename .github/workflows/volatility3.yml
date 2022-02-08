@@ -6,6 +6,10 @@ on:
   push:
     branches:
       - master
+    paths:
+      - .github/workflows/volatility3.yml
+      - src/volatility3/**
+      - README.md
 
 env:
   DOCKER_TAG_ALPINE: "3.15"

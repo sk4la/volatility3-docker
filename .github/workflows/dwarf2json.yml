@@ -6,6 +6,10 @@ on:
   push:
     branches:
       - master
+    paths:
+      - .github/workflows/dwarf2json.yml
+      - src/dwarf2json/**
+      - README.md
 
 env:
   DOCKER_TAG_ALPINE: "3.15"

@@ -46,11 +46,11 @@ docker run -i -t -v $PWD:/workspace --entrypoint volshell sk4la/volatility3
 
 Note that every produced artifact will be lost unless stored using a [volume](https://docs.docker.com/storage/volumes/) or [bind mount](https://docs.docker.com/storage/bind-mounts/) (as demonstrated here using the `--volume` option).
 
+> As determining the correct memory layout usually takes a bit of time, running Volatility interactively (i.e. instantiating the container using the `--interactive` flag) is preferred, although retrieving the configuration file using a volume is also possible. See the [examples](#examples) for practical use cases.
+
 ## Examples
 
-These images can be used interactively or as a throwaway solution for punctual problematics.
-
-> As determining the correct memory layout usually takes a bit of time, running Volatility interactively (i.e. instantiating the container using the `--interactive` flag) is preferred, although retrieving the configuration file using a volume is also possible.
+These images can be used either interactively or as a throwaway solution for punctual problematics.
 
 <details>
   <summary>Example #1: Interactive session using Volatility3 command-line interface (CLI)</summary>

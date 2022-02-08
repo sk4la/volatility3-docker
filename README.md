@@ -157,9 +157,9 @@ docker container run \
 
 This will generate the [Intermediate Symbol File (ISF) file](https://volatility3.readthedocs.io/en/latest/symbol-tables.html) `ce7ffb00c20b87500211456b3e905c47-1.json.xz` in the current working directory, which will hint Volatility at how to handle this specific build in order to retrieve the information.
 
-> Note that this will fetch the correct PDB file from the official [Microsoft Internet Symbol Server](https://msdl.microsoft.com/download/symbols) so this method will not work in air-gapped environments. See the [JPCERTCC repository](https://github.com/JPCERTCC/Windows-Symbol-Tables) for more details on how to retrieve the GUID from your own binaries.
+> Note that this will fetch the correct PDB file from the official [Microsoft Internet Symbol Server](https://msdl.microsoft.com/download/symbols) so this method will not work in air-gapped environments. See the [JPCERTCC repository](https://github.com/JPCERTCC/Windows-Symbol-Tables) and [blog post](https://blogs.jpcert.or.jp/en/2021/09/volatility3_offline.html) for more details on how to retrieve the GUID from your own binaries and use Volatility 3 in air-gapped environments.
 
-The ISF file must then be placed either in the main symbols directory (located at `$INSTALL_PREFIX/lib/volatility3/volatility3/symbols/windows` by default) or in the current working directory, under the `symbols` subdirectory (e.g. `./symbols/windows/ntkrnlmp.pdb/ce7ffb00c20b87500211456b3e905c47-1.json.xz`).
+The ISF file must then be placed either in the main symbols directory (located at `$INSTALL_PREFIX/lib/volatility3/volatility3/symbols/windows` by default) or in the current working directory, under the `symbols` subdirectory (e.g. `./symbols/windows/ntkrnlmp.pdb/ce7ffb00c20b87500211456b3e905c47-1.json.xz`). You can also use the `--symbol-dirs` option in addition to Docker's `--volume` option in order to provide the newly-created ISF files to Volatility.
 
 </details>
 

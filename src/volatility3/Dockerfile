@@ -104,6 +104,9 @@ RUN git clone --branch="${GIT_TAG_VOLATILITY3}" --depth=1 --single-branch \
 WORKDIR "${INSTALL_PREFIX}/lib/volatility3"
 
 RUN python3 setup.py install && \
+    chmod 0755 \
+        vol.py \
+        volatility3/framework/symbols/windows/pdbconv.py && \
     for destination in "v3" "vol" "vol3" "volatility" "volatility3"; \
     do ln -sf \
         "${INSTALL_PREFIX}/lib/volatility3/vol.py" \

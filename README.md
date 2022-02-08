@@ -139,6 +139,30 @@ Actually, all _dumper_ plugins (i.e. a Volatility plugin that is able to dump ra
 
 </details>
 
+<details>
+  <summary>Example #2: Generate an ISF file for a specific NT kernel build using <tt>pdbconv</tt></summary>
+
+### Example #2: Generate an ISF file for a specific NT kernel build using `pdbconv`
+
+This is very straighforward, simply instanciate a new container based on the `sk4la/volatility3` image using the `pdbconv` entrypoint:
+
+```sh
+docker container run \
+    --entrypoint pdbconv \
+    --init \
+    --volume "$PWD:/home/unprivileged/workspace" \
+    --workdir /home/unprivileged/workspace \
+    sk4la/volatility3 --guid ce7ffb00c20b87500211456b3e905c471 --keep --pattern ntkrnlmp.pdb
+```
+
+This will generate the [Intermediate Symbol File (ISF) file](https://volatility3.readthedocs.io/en/latest/symbol-tables.html) `ce7ffb00c20b87500211456b3e905c47-1.json.xz` in the current working directory, which will hint Volatility at how to handle this specific build in order to retrieve the information.
+
+> Note that this will fetch the correct PDB file from the official [Microsoft Internet Symbol Server](https://msdl.microsoft.com/download/symbols) so this method will not work in air-gapped environments. See the [JPCERTCC repository](https://github.com/JPCERTCC/Windows-Symbol-Tables) for more details on how to retrieve the GUID from your own binaries.
+
+The ISF file must then be placed either in the main symbols directory (located at `$INSTALL_PREFIX/lib/volatility3/volatility3/symbols/windows` by default) or in the current working directory, under the `symbols` subdirectory (e.g. `./symbols/windows/ntkrnlmp.pdb/ce7ffb00c20b87500211456b3e905c47-1.json.xz`).
+
+</details>
+
 ## Support
 
 In case you encounter a problem or want to suggest a new feature relative to these Docker images, please [submit a ticket](https://github.com/sk4la/volatility3-docker/issues). [Pull requests](https://github.com/sk4la/volatility3-docker/pulls) are also greatly appreciated.

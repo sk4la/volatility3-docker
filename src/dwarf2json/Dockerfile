@@ -2,13 +2,13 @@
 #
 # See https://github.com/sk4la/volatility3-docker for more details.
 
-ARG ALPINE_VERSION
+ARG ALPINE_VERSION="latest"
 
 FROM "alpine:${ALPINE_VERSION}" AS stage
 
 ARG GIT_TAG_DWARF2JSON="master"
 
-RUN apk add --no-cache --virtual=.build \
+RUN apk add --no-cache --virtual=stage \
         git \
         go
 
@@ -22,7 +22,7 @@ WORKDIR /stage/dwarf2json
 RUN go build -ldflags="-s -w"
 
 RUN apk --purge del \
-        .build
+        stage
 
 FROM "alpine:${ALPINE_VERSION}" AS production
 
@@ -32,6 +32,9 @@ ARG INSTALL_PREFIX="/usr/local"
 
 ENV LANG="C.UTF-8"
 ENV LC_ALL="C.UTF-8"
+
+RUN apk add --no-cache \
+        dumb-init
 
 RUN addgroup -S "${INSTALL_GROUP}" && \
     adduser -DHG -S "${INSTALL_USER}" -G "${INSTALL_GROUP}" -g "Unprivileged user,,,,"
@@ -51,18 +54,17 @@ WORKDIR "${INSTALL_PREFIX}"
 
 USER "${INSTALL_USER}"
 
-ENTRYPOINT [ "/usr/bin/env", "dwarf2json" ]
+ENTRYPOINT [ "/usr/bin/dumb-init", "--verbose", "--", "dwarf2json" ]
 
 CMD [ "--help" ]
 
-ARG PRODUCT_AUTHOR="sk4la <sk4la@gmail.com>"
+ARG PRODUCT_AUTHOR="sk4la <sk4la.box@gmail.com>"
 ARG PRODUCT_REPOSITORY="https://github.com/sk4la/volatility3-docker.git"
 
-ARG PRODUCT_BUILD_DATE
-ARG PRODUCT_BUILD_COMMIT
+ARG PRODUCT_BUILD_DATE="-"
+ARG PRODUCT_BUILD_COMMIT="-"
 
 LABEL image.author="${PRODUCT_AUTHOR}"
-LABEL image.repository="${PRODUCT_REPOSITORY}"
-
-LABEL image.date="${PRODUCT_BUILD_DATE}"
 LABEL image.commit="${PRODUCT_BUILD_COMMIT}"
+LABEL image.date="${PRODUCT_BUILD_DATE}"
+LABEL image.repository="${PRODUCT_REPOSITORY}"

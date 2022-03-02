@@ -2,14 +2,14 @@
 #
 # See https://github.com/sk4la/volatility3-docker for more details.
 
-ARG ALPINE_VERSION
+ARG ALPINE_VERSION="latest"
 
 FROM "alpine:${ALPINE_VERSION}" AS stage
 
 ARG GIT_TAG_JPCERT_SYMBOLS="main"
 ARG GIT_TAG_PYTHON_YARA="master"
 
-RUN apk add --no-cache --virtual=.build \
+RUN apk add --no-cache --virtual=stage \
         curl \
         gcc \
         git \
@@ -47,7 +47,7 @@ RUN curl --location --max-redirs 1 \
         symbols.sha256
 
 RUN apk --purge del \
-        .build
+        stage
 
 FROM "alpine:${ALPINE_VERSION}" AS production
 
@@ -65,8 +65,9 @@ RUN addgroup -S "${INSTALL_GROUP}" && \
 
 RUN apk add --no-cache \
         capstone \
+        dumb-init \
         python3 && \
-    apk add --no-cache --virtual=.build \
+    apk add --no-cache --virtual=stage \
         gcc \
         git \
         musl-dev \
@@ -119,7 +120,7 @@ RUN python3 setup.py install && \
 ENV PATH="${INSTALL_PREFIX}/bin:${PATH}"
 
 RUN apk --purge del \
-        .build
+        stage
 
 WORKDIR "${INSTALL_PREFIX}/lib/volatility3/volatility3/symbols"
 
@@ -147,18 +148,17 @@ WORKDIR "${INSTALL_PREFIX}"
 
 USER "${INSTALL_USER}"
 
-ENTRYPOINT [ "/usr/bin/env", "volatility3" ]
+ENTRYPOINT [ "/usr/bin/dumb-init", "--verbose", "--", "volatility3" ]
 
 CMD [ "--help" ]
 
-ARG PRODUCT_AUTHOR="sk4la <sk4la@gmail.com>"
+ARG PRODUCT_AUTHOR="sk4la <sk4la.box@gmail.com>"
 ARG PRODUCT_REPOSITORY="https://github.com/sk4la/volatility3-docker.git"
 
-ARG PRODUCT_BUILD_DATE
-ARG PRODUCT_BUILD_COMMIT
+ARG PRODUCT_BUILD_DATE="-"
+ARG PRODUCT_BUILD_COMMIT="-"
 
 LABEL image.author="${PRODUCT_AUTHOR}"
-LABEL image.repository="${PRODUCT_REPOSITORY}"
-
-LABEL image.date="${PRODUCT_BUILD_DATE}"
 LABEL image.commit="${PRODUCT_BUILD_COMMIT}"
+LABEL image.date="${PRODUCT_BUILD_DATE}"
+LABEL image.repository="${PRODUCT_REPOSITORY}"

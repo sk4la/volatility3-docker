@@ -2,13 +2,13 @@
 #
 # See https://github.com/sk4la/volatility3-docker for more details.
 
-ARG ALPINE_VERSION
+ARG ALPINE_VERSION="latest"
 
 FROM "alpine:${ALPINE_VERSION}" AS stage
 
 ARG GIT_TAG_PYTHON_YARA="master"
 
-RUN apk add --no-cache --virtual=.build \
+RUN apk add --no-cache --virtual=stage \
         curl \
         gcc \
         git \
@@ -27,7 +27,7 @@ WORKDIR /stage/yara-python
 RUN python3 setup.py build
 
 RUN apk --purge del \
-        .build
+        stage
 
 FROM "alpine:${ALPINE_VERSION}" AS production
 
@@ -45,10 +45,11 @@ RUN addgroup -S "${INSTALL_GROUP}" && \
     adduser -DG -S "${INSTALL_USER}" -G "${INSTALL_GROUP}" -g "Unprivileged user,,,,"
 
 RUN apk add --no-cache \
+        dumb-init \
         libxml2 \
         libxslt \
         python2 && \
-    apk add --no-cache --virtual=.build \
+    apk add --no-cache --virtual=stage \
         g++ \
         gcc \
         git \
@@ -112,24 +113,23 @@ RUN git clone --branch="${GIT_TAG_VOLATILITY_COMMUNITY}" --depth=1 --single-bran
         https://github.com/volatilityfoundation/community.git
 
 RUN apk --purge del \
-        .build
+        stage
 
 WORKDIR "${INSTALL_PREFIX}"
 
 USER "${INSTALL_USER}"
 
-ENTRYPOINT [ "/usr/bin/env", "volatility" ]
+ENTRYPOINT [ "/usr/bin/dumb-init", "--verbose", "--", "volatility" ]
 
 CMD [ "--help" ]
 
-ARG PRODUCT_AUTHOR="sk4la <sk4la@gmail.com>"
+ARG PRODUCT_AUTHOR="sk4la <sk4la.box@gmail.com>"
 ARG PRODUCT_REPOSITORY="https://github.com/sk4la/volatility3-docker.git"
 
-ARG PRODUCT_BUILD_DATE
-ARG PRODUCT_BUILD_COMMIT
+ARG PRODUCT_BUILD_COMMIT="-"
+ARG PRODUCT_BUILD_DATE="-"
 
 LABEL image.author="${PRODUCT_AUTHOR}"
-LABEL image.repository="${PRODUCT_REPOSITORY}"
-
-LABEL image.date="${PRODUCT_BUILD_DATE}"
 LABEL image.commit="${PRODUCT_BUILD_COMMIT}"
+LABEL image.date="${PRODUCT_BUILD_DATE}"
+LABEL image.repository="${PRODUCT_REPOSITORY}"

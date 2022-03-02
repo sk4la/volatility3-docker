@@ -54,7 +54,7 @@ WORKDIR "${INSTALL_PREFIX}"
 
 USER "${INSTALL_USER}"
 
-ENTRYPOINT [ "/usr/bin/dumb-init", "--verbose", "--", "dwarf2json" ]
+ENTRYPOINT [ "/usr/bin/dumb-init", "--", "dwarf2json" ]
 
 CMD [ "--help" ]
 

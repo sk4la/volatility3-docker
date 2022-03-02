@@ -148,7 +148,7 @@ WORKDIR "${INSTALL_PREFIX}"
 
 USER "${INSTALL_USER}"
 
-ENTRYPOINT [ "/usr/bin/dumb-init", "--verbose", "--", "volatility3" ]
+ENTRYPOINT [ "/usr/bin/dumb-init", "--", "volatility3" ]
 
 CMD [ "--help" ]
 

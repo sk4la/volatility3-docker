@@ -119,7 +119,7 @@ WORKDIR "${INSTALL_PREFIX}"
 
 USER "${INSTALL_USER}"
 
-ENTRYPOINT [ "/usr/bin/dumb-init", "--verbose", "--", "volatility" ]
+ENTRYPOINT [ "/usr/bin/dumb-init", "--", "volatility" ]
 
 CMD [ "--help" ]
 

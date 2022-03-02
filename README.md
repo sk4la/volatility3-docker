@@ -66,7 +66,6 @@ First, begin by instantiating a new container based on the `sk4la/volatility3` i
 ```sh
 docker container run \
     --entrypoint ash \
-    --init \
     --interactive \
     --tty \
     --volume "$PWD:/home/unprivileged/workspace" \
@@ -149,7 +148,6 @@ This is very straighforward, simply instanciate a new container based on the `sk
 ```sh
 docker container run \
     --entrypoint pdbconv \
-    --init \
     --volume "$PWD:/home/unprivileged/workspace" \
     --workdir /home/unprivileged/workspace \
     sk4la/volatility3 --guid ce7ffb00c20b87500211456b3e905c471 --keep --pattern ntkrnlmp.pdb

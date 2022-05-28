@@ -1,7 +1,12 @@
 version: 2
 
 updates:
-  - package-ecosystem: github-actions
+  - assignees:
+      - sk4la
     directory: /
+    labels:
+      - dependencies
+    package-ecosystem: github-actions
     schedule:
-      interval: "daily"
+      interval: daily
+    target-branch: master

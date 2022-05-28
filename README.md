@@ -12,6 +12,21 @@ All images are directly available on Docker Hub:
 
 By the way, [why are these images not (yet) official?](https://github.com/volatilityfoundation/volatility3/pull/92)
 
+## What's in the Box?
+
+- [`sk4la/dwarf2json`](https://hub.docker.com/r/sk4la/dwarf2json)
+  - The official [dwarf2json](https://github.com/volatilityfoundation/dwarf2json) project.
+- [`sk4la/volatility`](https://hub.docker.com/r/sk4la/volatility)
+  - The latest release of the official [Volatility](https://github.com/volatilityfoundation/volatility) project (unmaintained since 2020) ;
+  - The [community-maintained plugins](https://github.com/volatilityfoundation/community) for Volatility.
+- [`sk4la/volatility3`](https://hub.docker.com/r/sk4la/volatility) ⭐
+  - The latest release of the official [Volatility 3](https://github.com/volatilityfoundation/volatility3) project ;
+  - The [community-maintained plugins](https://github.com/volatilityfoundation/community3) for Volatility 3 ;
+  - The [official symbol tables](https://github.com/volatilityfoundation/volatility3#symbol-tables) for Windows, macOS and GNU/Linux provided by the Volatility Foundation ;
+  - The [symbol tables](https://github.com/JPCERTCC/Windows-Symbol-Tables) provided by the [JPCERT/CC](https://www.jpcert.or.jp/) for the ongoing Windows 10+ support.
+
+Please [let me know](#support) if there is anything missing or if you would like to see something else added to the mix.
+
 ## Getting started
 
 Building and/or using these images requires Docker to be installed on the system. Please refer to the [official documentation](https://docs.docker.com/) for more details on how to install and use the Docker toolchain.

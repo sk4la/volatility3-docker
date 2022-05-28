@@ -12,7 +12,7 @@ on:
       - README.md
 
 env:
-  DOCKER_TAG_ALPINE: "3.15"
+  DOCKER_TAG_ALPINE: "3.16"
   DOCKER_TAG_DWARF2JSON: "0.6.0"
   GIT_TAG_DWARF2JSON: master
 

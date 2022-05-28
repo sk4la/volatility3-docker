@@ -3,14 +3,16 @@ name: volatility
 on:
   push:
     branches:
+      - development
       - master
+      - staging
     paths:
       - .github/workflows/volatility.yml
       - src/volatility/**
       - README.md
 
 env:
-  DOCKER_TAG_ALPINE: "3.16"
+  DOCKER_TAG_ALPINE: "3.15.4"
   DOCKER_TAG_VOLATILITY: "2.6.1"
   GIT_TAG_PYTHON_YARA: v4.2.0
   GIT_TAG_VOLATILITY: master

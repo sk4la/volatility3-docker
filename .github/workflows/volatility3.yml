@@ -5,7 +5,9 @@ on:
     - cron: 0 2 * * 1,3,5
   push:
     branches:
+      - development
       - master
+      - staging
     paths:
       - .github/workflows/volatility3.yml
       - src/volatility3/**

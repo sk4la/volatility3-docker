@@ -53,12 +53,14 @@ RUN apk add --no-cache \
         g++ \
         gcc \
         git \
+        jpeg-dev \
         libxml2-dev \
         libxslt-dev \
         musl-dev \
         openssl-dev \
         python2-dev \
-        swig
+        swig \
+        zlib-dev
 
 ENV PYTHONFAULTHANDLER="1"
 ENV PYTHONHASHSEED="random"
@@ -72,6 +74,7 @@ RUN python2 -m ensurepip --default-pip && \
         lxml \
         openpyxl \
         pefile \
+        pillow \
         pycoin \
         pycrypto \
         ujson

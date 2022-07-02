@@ -76,7 +76,7 @@ RUN python2 -m ensurepip --default-pip && \
         lxml \
         openpyxl \
         pefile \
-        pillow \
+        pillow==6 \
         pycoin \
         pycrypto \
         ujson

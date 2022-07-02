@@ -46,9 +46,11 @@ RUN addgroup -S "${INSTALL_GROUP}" && \
 
 RUN apk add --no-cache \
         dumb-init \
+        jpeg \
         libxml2 \
         libxslt \
-        python2 && \
+        python2 \
+        zlib && \
     apk add --no-cache --virtual=stage \
         g++ \
         gcc \

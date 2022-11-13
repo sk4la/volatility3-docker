@@ -64,8 +64,10 @@ RUN addgroup -S "${INSTALL_GROUP}" && \
     adduser -DG -S "${INSTALL_USER}" -G "${INSTALL_GROUP}" -g "Unprivileged user,,,,"
 
 RUN apk add --no-cache \
+        bat \
         capstone \
         dumb-init \
+        less \
         python3 && \
     apk add --no-cache --virtual=stage \
         gcc \
@@ -143,6 +145,10 @@ COPY --from=stage \
 RUN find . -type d -exec chmod 0777 "{}" \; && \
     find . -type f -exec chmod 0666 "{}" \; && \
     find /usr/lib/python3* -type d -name symbols -exec chmod 0777 "{}" \;
+
+COPY --chown=root:root \
+         assets/aliases.sh \
+         /etc/profile.d/
 
 WORKDIR "${INSTALL_PREFIX}"
 

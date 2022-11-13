@@ -5,25 +5,29 @@ This repository hosts some ready-to-use Docker images based on [Alpine Linux](ht
 All images are directly available on Docker Hub:
 
 <p align="center">
-  <a href="https://hub.docker.com/r/sk4la/dwarf2json"><img alt="sk4la/dwarf2json" src="https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/dwarf2json?label=sk4la/dwarf2json&style=for-the-badge&logo=docker&logoColor=white"/></a>
-  <a href="https://hub.docker.com/r/sk4la/volatility"><img alt="sk4la/volatility" src="https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility?label=sk4la/volatility&style=for-the-badge&logo=docker&logoColor=white"/></a>
   <a href="https://hub.docker.com/r/sk4la/volatility3"><img alt="sk4la/volatility3" src="https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility3?label=sk4la/volatility3&style=for-the-badge&logo=docker&logoColor=white"/></a>
+  <a href="https://hub.docker.com/r/sk4la/volatility"><img alt="sk4la/volatility" src="https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/volatility?label=sk4la/volatility&style=for-the-badge&logo=docker&logoColor=white"/></a>
+  <a href="https://hub.docker.com/r/sk4la/dwarf2json"><img alt="sk4la/dwarf2json" src="https://img.shields.io/github/workflow/status/sk4la/volatility3-docker/dwarf2json?label=sk4la/dwarf2json&style=for-the-badge&logo=docker&logoColor=white"/></a>
 </p>
 
 By the way, [why are these images not (yet) official?](https://github.com/volatilityfoundation/volatility3/pull/92)
 
 ## What's in the Box?
 
-- [`sk4la/dwarf2json`](https://hub.docker.com/r/sk4la/dwarf2json)
-  - The official [dwarf2json](https://github.com/volatilityfoundation/dwarf2json) project.
-- [`sk4la/volatility`](https://hub.docker.com/r/sk4la/volatility)
-  - The latest release of the official [Volatility](https://github.com/volatilityfoundation/volatility) project (unmaintained since 2020) ;
-  - The [community-maintained plugins](https://github.com/volatilityfoundation/community) for Volatility.
-- [`sk4la/volatility3`](https://hub.docker.com/r/sk4la/volatility) ⭐
+- [`sk4la/volatility3`](https://hub.docker.com/r/sk4la/volatility) ⭐ (version [2.0.1](https://github.com/volatilityfoundation/volatility3/releases/tag/v2.0.1) from March 17, 2022)
   - The latest release of the official [Volatility 3](https://github.com/volatilityfoundation/volatility3) project ;
   - The [community-maintained plugins](https://github.com/volatilityfoundation/community3) for Volatility 3 ;
   - The [official symbol tables](https://github.com/volatilityfoundation/volatility3#symbol-tables) for Windows, macOS and GNU/Linux provided by the Volatility Foundation ;
-  - The [symbol tables](https://github.com/JPCERTCC/Windows-Symbol-Tables) provided by the [JPCERT/CC](https://www.jpcert.or.jp/) for the ongoing Windows 10+ support.
+  - The [symbol tables](https://github.com/JPCERTCC/Windows-Symbol-Tables) provided by the [JPCERT/CC](https://www.jpcert.or.jp/) for the ongoing Windows 10+ support ;
+
+> The `latest` and `stable` tags, as well as the literal version number (e.g `2.0.1`) all point to the [latest official release](https://github.com/volatilityfoundation/volatility3/releases). In order to follow the development cycle of Volatility 3, an `edge` tag has been added, which points to the current state of the `master` branch—which could be unstable. Power-users should feel free to use this one at their own expense.
+
+- [`sk4la/volatility`](https://hub.docker.com/r/sk4la/volatility)
+  - The latest release of the official [Volatility](https://github.com/volatilityfoundation/volatility) project (unmaintained since 2020) ;
+  - The [community-maintained plugins](https://github.com/volatilityfoundation/community) for Volatility.
+
+- [`sk4la/dwarf2json`](https://hub.docker.com/r/sk4la/dwarf2json)
+  - The official [dwarf2json](https://github.com/volatilityfoundation/dwarf2json) project.
 
 Please [let me know](#support) if there is anything missing or if you would like to see something else added to the mix.
 
@@ -65,7 +69,7 @@ Note that every produced artifact will be lost unless stored using a [volume](ht
 
 ## Examples
 
-These images can be used either interactively or as a throwaway solution for punctual problematics.
+These images can be used either interactively or as a throwaway solution for punctual issues.
 
 <details>
   <summary>Example #1: Interactive session using Volatility3 command-line interface (CLI)</summary>
@@ -158,7 +162,7 @@ Actually, all _dumper_ plugins (i.e. a Volatility plugin that is able to dump ra
 
 ### Example #2: Generate an ISF file for a specific NT kernel build using `pdbconv`
 
-This is very straighforward, simply instanciate a new container based on the `sk4la/volatility3` image using the `pdbconv` entrypoint:
+This is very straightforward, simply instanciate a new container based on the `sk4la/volatility3` image using the `pdbconv` entrypoint:
 
 ```sh
 docker container run \
@@ -170,7 +174,7 @@ docker container run \
 
 This will generate the [Intermediate Symbol File (ISF) file](https://volatility3.readthedocs.io/en/latest/symbol-tables.html) `ce7ffb00c20b87500211456b3e905c47-1.json.xz` in the current working directory, which will hint Volatility at how to handle this specific build in order to retrieve the information.
 
-> Note that this will fetch the correct PDB file from the official [Microsoft Internet Symbol Server](https://msdl.microsoft.com/download/symbols) so this method will not work inside air-gapped environments. See the [JPCERTCC repository](https://github.com/JPCERTCC/Windows-Symbol-Tables) and [blog post](https://blogs.jpcert.or.jp/en/2021/09/volatility3_offline.html) for more details on how to retrieve the GUID from your own binaries and use Volatility 3 inside air-gapped environments.
+> Note that this will fetch the correct PDB file from the official [Microsoft Internet Symbol Server](https://msdl.microsoft.com/download/symbols) so this method will not work inside air-gapped environments. See [JPCERTCC's repository](https://github.com/JPCERTCC/Windows-Symbol-Tables) and [blog post](https://blogs.jpcert.or.jp/en/2021/09/volatility3_offline.html) for more details on how to retrieve the GUID from your own binaries and use Volatility 3 inside air-gapped environments.
 
 The ISF file must then be placed either in the main symbols directory (located at `$INSTALL_PREFIX/lib/volatility3/volatility3/symbols/windows` by default) or in the current working directory, under the `symbols` subdirectory (e.g. `./symbols/windows/ntkrnlmp.pdb/ce7ffb00c20b87500211456b3e905c47-1.json.xz`). You can also use the `--symbol-dirs` option in addition to Docker's `--volume` option in order to provide the newly-created ISF files to Volatility.
 

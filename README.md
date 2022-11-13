@@ -219,6 +219,33 @@ docker image list
 
 </details>
 
+<details>
+  <summary>Example #4: Overloading the Docker images to fit your needs</summary>
+
+### Example #4: Overloading the Docker images to fit your needs
+
+If you feel that the original image lacks useful stuff, you can either suggest it by [submitting a ticket](https://github.com/sk4la/volatility3-docker/issues) or you can overload the base image yourself in order to adapt it to your needs.
+
+In order to do this, simply create a new `Dockerfile` based off one of the images from this repository—for example `sk4la/volatility3`:
+
+```docker
+FROM sk4la/volatility3
+
+USER root
+
+RUN apk add $STUFF
+
+USER unprivileged
+```
+
+> By default, all of the images provided in this repository do not run as `root`—they run as the `unprivileged` user. For actions necessitating super-user privileges, it is necessary to switch user temporarily, as shown in the example.
+
+Then, build the image by executing the `docker image build --tag volatility3-overloaded .` command. The newly-created Docker image should then appear in the local repository.
+
+> Please have a look at the [original `Dockerfile`](src/volatility3/Dockerfile) if you need a hint on how everything is setup.
+
+</details>
+
 ## Support
 
 In case you encounter a problem or want to suggest a new feature relative to these Docker images, please [submit a ticket](https://github.com/sk4la/volatility3-docker/issues). [Pull requests](https://github.com/sk4la/volatility3-docker/pulls) are also greatly appreciated.

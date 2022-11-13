@@ -54,7 +54,7 @@ jobs:
             GIT_TAG_JPCERT_SYMBOLS=${{ env.GIT_TAG_JPCERT_SYMBOLS }}
             GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}
             GIT_TAG_VOLATILITY3=${{ env.GIT_TAG_VOLATILITY3 }}
-            PRODUCT_BUILD_COMMIT=${{ env.GITHUB_SHA }}
+            PRODUCT_BUILD_COMMIT=${{ github.sha }}
             PRODUCT_BUILD_DATE=${{ steps.date.outputs.date }}
 
       - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3

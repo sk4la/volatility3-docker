@@ -52,7 +52,7 @@ jobs:
             ALPINE_VERSION=${{ env.DOCKER_TAG_ALPINE }}
             GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}
             GIT_TAG_VOLATILITY=${{ env.GIT_TAG_VOLATILITY }}
-            PRODUCT_BUILD_COMMIT=${{ env.GITHUB_SHA }}
+            PRODUCT_BUILD_COMMIT=${{ github.sha }}
             PRODUCT_BUILD_DATE=${{ steps.date.outputs.date }}
 
       - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/volatility

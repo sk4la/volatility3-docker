@@ -50,7 +50,7 @@ jobs:
           build-args: |
             ALPINE_VERSION=${{ env.DOCKER_TAG_ALPINE }}
             GIT_TAG_DWARF2JSON=${{ env.GIT_TAG_DWARF2JSON }}
-            PRODUCT_BUILD_COMMIT=${{ env.GITHUB_SHA }}
+            PRODUCT_BUILD_COMMIT=${{ github.sha }}
             PRODUCT_BUILD_DATE=${{ steps.date.outputs.date }}
 
       - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json

@@ -12,7 +12,9 @@ on:
       - README.md
 
 env:
-  DOCKER_TAG_ALPINE: "3.16"
+  # Stuck at this version since Alpine Linux no longer distributes Python 2 through its official
+  # repositories.
+  DOCKER_TAG_ALPINE: "3.15.4"
   DOCKER_TAG_VOLATILITY: "2.6.1"
   GIT_TAG_PYTHON_YARA: v4.2.3
   GIT_TAG_VOLATILITY: master

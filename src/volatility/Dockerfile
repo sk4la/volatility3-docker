@@ -45,8 +45,10 @@ RUN addgroup -S "${INSTALL_GROUP}" && \
     adduser -DG -S "${INSTALL_USER}" -G "${INSTALL_GROUP}" -g "Unprivileged user,,,,"
 
 RUN apk add --no-cache \
+        bat \
         dumb-init \
         jpeg \
+        less \
         libxml2 \
         libxslt \
         python2 \
@@ -119,6 +121,10 @@ RUN git clone --branch="${GIT_TAG_VOLATILITY_COMMUNITY}" --depth=1 --single-bran
 
 RUN apk --purge del \
         stage
+
+COPY --chown=root:root \
+         assets/aliases.sh \
+         /etc/profile.d/
 
 WORKDIR "${INSTALL_PREFIX}"
 

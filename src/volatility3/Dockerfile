@@ -15,7 +15,8 @@ RUN apk add --no-cache --virtual=stage \
         git \
         musl-dev \
         python3-dev \
-        unzip
+        unzip \
+        libressl-dev
 
 RUN python3 -m ensurepip --default-pip
 

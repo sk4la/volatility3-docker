@@ -39,7 +39,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Build and push ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: src/dwarf2json
           push: true

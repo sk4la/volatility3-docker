@@ -12,6 +12,7 @@ RUN apk add --no-cache --virtual=stage \
         curl \
         gcc \
         git \
+        linux-headers \
         musl-dev \
         python3-dev
 
@@ -60,6 +61,7 @@ RUN apk add --no-cache \
         jpeg-dev \
         libxml2-dev \
         libxslt-dev \
+        linux-headers \
         musl-dev \
         openssl-dev \
         python2-dev \
@@ -134,7 +136,7 @@ ENTRYPOINT [ "/usr/bin/dumb-init", "--", "volatility" ]
 
 CMD [ "--help" ]
 
-ARG PRODUCT_AUTHOR="sk4la <sk4la.box@gmail.com>"
+ARG PRODUCT_AUTHOR="sk4la <sk4la.box+github@gmail.com>"
 ARG PRODUCT_REPOSITORY="https://github.com/sk4la/volatility3-docker.git"
 
 ARG PRODUCT_BUILD_COMMIT="-"

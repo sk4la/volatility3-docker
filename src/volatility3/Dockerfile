@@ -13,6 +13,7 @@ RUN apk add --no-cache --virtual=stage \
         curl \
         gcc \
         git \
+        linux-headers \
         musl-dev \
         python3-dev \
         unzip
@@ -72,6 +73,9 @@ RUN apk add --no-cache \
     apk add --no-cache --virtual=stage \
         gcc \
         git \
+        libusb-dev \
+        linux-headers \
+        make \
         musl-dev \
         python3-dev
 
@@ -106,7 +110,9 @@ RUN git clone --branch="${GIT_TAG_VOLATILITY3}" --depth=1 --single-branch \
 
 WORKDIR "${INSTALL_PREFIX}/lib/volatility3"
 
-RUN python3 setup.py install && \
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install --requirement requirements.txt && \
+    python3 setup.py install && \
     chmod 0755 \
         vol.py \
         volatility3/framework/symbols/windows/pdbconv.py && \
@@ -158,7 +164,7 @@ ENTRYPOINT [ "/usr/bin/dumb-init", "--", "volatility3" ]
 
 CMD [ "--help" ]
 
-ARG PRODUCT_AUTHOR="sk4la <sk4la.box@gmail.com>"
+ARG PRODUCT_AUTHOR="sk4la <sk4la.box+github@gmail.com>"
 ARG PRODUCT_REPOSITORY="https://github.com/sk4la/volatility3-docker.git"
 
 ARG PRODUCT_BUILD_DATE="-"

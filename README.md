@@ -14,20 +14,20 @@ By the way, [why are these images not (yet) official?](https://github.com/volati
 
 ## What's in the Box?
 
-- [`sk4la/volatility3`](https://hub.docker.com/r/sk4la/volatility) ⭐ (version [2.0.1](https://github.com/volatilityfoundation/volatility3/releases/tag/v2.0.1) from March 17, 2022)
-  - The latest release of the official [Volatility 3](https://github.com/volatilityfoundation/volatility3) project ;
-  - The [community-maintained plugins](https://github.com/volatilityfoundation/community3) for Volatility 3 ;
-  - The [official symbol tables](https://github.com/volatilityfoundation/volatility3#symbol-tables) for Windows, macOS and GNU/Linux provided by the Volatility Foundation ;
-  - The [symbol tables](https://github.com/JPCERTCC/Windows-Symbol-Tables) provided by the [JPCERT/CC](https://www.jpcert.or.jp/) for the ongoing Windows 10+ support ;
+- [`sk4la/volatility3`](https://hub.docker.com/r/sk4la/volatility) ⭐ (version [2.5.0](https://github.com/volatilityfoundation/volatility3/releases/tag/v2.5.0) from September 27, 2023)
+  - The latest release of the official [Volatility 3](https://github.com/volatilityfoundation/volatility3) project
+  - The [community-maintained plugins](https://github.com/volatilityfoundation/community3) for Volatility 3
+  - The [official symbol tables](https://github.com/volatilityfoundation/volatility3#symbol-tables) for Windows, macOS and GNU/Linux provided by the Volatility Foundation
+  - The [symbol tables](https://github.com/JPCERTCC/Windows-Symbol-Tables) provided by the [JPCERT/CC](https://www.jpcert.or.jp/) for the ongoing Windows 11+ support
 
-> The `latest` and `stable` tags, as well as the literal version number (e.g `2.0.1`) all point to the [latest official release](https://github.com/volatilityfoundation/volatility3/releases). In order to follow the development cycle of Volatility 3, an `edge` tag has been added, which points to the current state of the `master` branch—which could be unstable. Power-users should feel free to use this one at their own expense.
+> The `latest` and `stable` tags, as well as the literal version number (e.g `2.5.0`) all point to the [latest official release](https://github.com/volatilityfoundation/volatility3/releases). In order to follow the development cycle of Volatility 3, an `edge` tag has been added, which points to the current state of the `master` branch—which could be unstable. Power-users should feel free to use this one at their own expense.
 
 - [`sk4la/volatility`](https://hub.docker.com/r/sk4la/volatility)
-  - The latest release of the official [Volatility](https://github.com/volatilityfoundation/volatility) project (unmaintained since 2020) ;
-  - The [community-maintained plugins](https://github.com/volatilityfoundation/community) for Volatility.
+  - The latest release of the official [Volatility](https://github.com/volatilityfoundation/volatility) project (unmaintained since 2020)
+  - The [community-maintained plugins](https://github.com/volatilityfoundation/community) for Volatility
 
 - [`sk4la/dwarf2json`](https://hub.docker.com/r/sk4la/dwarf2json)
-  - The official [dwarf2json](https://github.com/volatilityfoundation/dwarf2json) project.
+  - The official [dwarf2json](https://github.com/volatilityfoundation/dwarf2json) project
 
 Please [let me know](#support) if there is anything missing or if you would like to see something else added to the mix.
 
@@ -58,7 +58,7 @@ docker run -v $PWD:/workspace sk4la/volatility3 -f /workspace/volatile.mem windo
 In order to use the Volatility shell (a.k.a. the [volshell](https://volatility3.readthedocs.io/en/latest/volshell.html)) or other entrypoints, use the `--entrypoint` option when instantiating the container:
 
 ```sh
-docker run -i -t -v $PWD:/workspace --entrypoint volshell sk4la/volatility3
+docker run -it -v $PWD:/workspace --entrypoint volshell sk4la/volatility3 -f /workspace/volatile.mem
 ```
 
 > The `--interactive` and `--tty` options (or their short versions, respectively `-i` and `-t`) are needed in order to keep the terminal open while interacting with the containerized application.
@@ -83,37 +83,21 @@ The following is a practical example of using Volatility 3 (and more precisely t
 First, begin by instantiating a new container based on the `sk4la/volatility3` image:
 
 ```sh
-docker container run \
-    --entrypoint ash \
-    --interactive \
-    --tty \
-    --volume "$PWD:/home/unprivileged/workspace" \
-    --workdir /home/unprivileged/workspace \
-    sk4la/volatility3
+docker container run --entrypoint ash --interactive --tty --volume "$PWD:/home/unprivileged/workspace" --workdir /home/unprivileged/workspace sk4la/volatility3
 ```
 
 Then, inside the newly-created container, use Volatility 3 to parse the memory image and write the configuration to disk:
 
 ```sh
-volatility3 \
-    --file volatile.mem \
-    --log volatile.mem.log \
-    --renderer pretty \
-    --write-config \
-    windows.info
+volatility3 --file volatile.mem --log volatile.mem.log --renderer pretty --save-config volatile.mem.json windows.info
 ```
 
-The configuration file `config.json` should reside in the current directory. This configuration can then be used as a basis for the upcoming runs using the `--config` flag—so that Volatility no longer has to crawl the image to find the right structures.
+The configuration file `volatile.mem.json` can then be used as a basis for the upcoming runs using the `--config` flag—so that Volatility no longer has to crawl the image to find the right structures.
 
 Next, extract the list of processes by executing Volatility 3 again using the previously generated configuration:
 
 ```sh
-volatility3 \
-    --config config.json \
-    --file volatile.mem \
-    --log volatile.mem.log \
-    --renderer pretty \
-    windows.pslist
+volatility3 --config volatile.mem.json --file volatile.mem --log volatile.mem.log --renderer pretty windows.pslist
 ```
 
 For post-processing, it is usually easier to dump the results in CSV or JSON format:
@@ -121,14 +105,7 @@ For post-processing, it is usually easier to dump the results in CSV or JSON for
 ```sh
 mkdir volatile.mem.results
 
-volatility3 \
-    --config config.json \
-    --file volatile.mem \
-    --log volatile.mem.log \
-    --quiet \
-    --renderer csv \
-    windows.pslist \
-    | tee -a volatile.mem.results/pslist.csv
+volatility3 --config volatile.mem.json --file volatile.mem --log volatile.mem.log --quiet --renderer csv windows.pslist | tee -a volatile.mem.results/pslist.csv
 ```
 
 The file `~/workspace/volatile.mem.results/pslist.csv` should contain the CSV-formatted results of the `windows.pslist.PsList` plugin.
@@ -138,15 +115,7 @@ For dumping a process image, first create a directory that will contain all futu
 ```sh
 mkdir volatile.mem.dat
 
-volatility3 \
-    --config config.json \
-    --file volatile.mem \
-    --log volatile.mem.log \
-    --output-dir volatile.mem.dat \
-    --renderer pretty \
-    windows.pslist \
-        --dump \
-        --pid 2700
+volatility3 --config volatile.mem.json --file volatile.mem --log volatile.mem.log --output-dir volatile.mem.dat --renderer pretty windows.pslist --dump --pid 2700
 ```
 
 The binary sample should reside in the `~/workspace/volatile.mem.dat` directory, ready to be analyzed by a reverse engineer.
@@ -165,11 +134,7 @@ Actually, all _dumper_ plugins (i.e. a Volatility plugin that is able to dump ra
 This is very straightforward, simply instanciate a new container based on the `sk4la/volatility3` image using the `pdbconv` entrypoint:
 
 ```sh
-docker container run \
-    --entrypoint pdbconv \
-    --volume "$PWD:/home/unprivileged/workspace" \
-    --workdir /home/unprivileged/workspace \
-    sk4la/volatility3 --guid ce7ffb00c20b87500211456b3e905c471 --keep --pattern ntkrnlmp.pdb
+docker container run --entrypoint pdbconv --volume "$PWD:/home/unprivileged/workspace" --workdir /home/unprivileged/workspace sk4la/volatility3 --guid ce7ffb00c20b87500211456b3e905c471 --keep --pattern ntkrnlmp.pdb
 ```
 
 This will generate the [Intermediate Symbol File (ISF) file](https://volatility3.readthedocs.io/en/latest/symbol-tables.html) `ce7ffb00c20b87500211456b3e905c47-1.json.xz` in the current working directory, which will hint Volatility at how to handle this specific build in order to retrieve the information.
@@ -185,7 +150,7 @@ The ISF file must then be placed either in the main symbols directory (located a
 
 ### Example #3: Using the Docker images inside air-gapped environments
 
-This section explains how to use the Docker images inside air-gapped (or disconnected) environments. This can turn out to be useful when analyzing volatile memory samples inside air-gapped forensic labs.
+This section explains how to use the Docker images inside air-gapped (or disconnected) environments. This can turn out to be useful when analyzing volatile memory samples inside isolated forensic labs.
 
 > :bulb: This procedure is not specific to the Docker images hosted in this repository and can be used for any Docker image.
 
@@ -238,7 +203,7 @@ RUN apk add $STUFF
 USER unprivileged
 ```
 
-> By default, all of the images provided in this repository do not run as `root`—they run as the `unprivileged` user. For actions necessitating super-user privileges, it is necessary to switch user temporarily, as shown in the example.
+> By default, all of the images provided in this repository do not run as `root`—they run as the `unprivileged` user. For actions necessitating superuser privileges, it is necessary to switch user temporarily, as shown in the example.
 
 Then, build the image by executing the `docker image build --tag volatility3-overloaded .` command. The newly-created Docker image should then appear in the local repository.
 

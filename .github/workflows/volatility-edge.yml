@@ -1,6 +1,7 @@
 name: volatility
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - development

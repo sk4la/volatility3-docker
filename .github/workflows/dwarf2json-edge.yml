@@ -1,6 +1,7 @@
 name: dwarf2json
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - development

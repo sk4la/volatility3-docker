@@ -28,6 +28,9 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v4
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up docker buildx
         uses: docker/setup-buildx-action@v3
 
@@ -45,6 +48,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: src/volatility3
+          platforms: linux/386,linux/amd64,linux/arm/v7,linux/arm64/v8
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:${{ env.DOCKER_TAG_VOLATILITY3 }}

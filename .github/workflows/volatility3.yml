@@ -48,7 +48,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: src/volatility3
-          platforms: linux/386,linux/amd64,linux/arm/v7,linux/arm64/v8
+          platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:${{ env.DOCKER_TAG_VOLATILITY3 }}

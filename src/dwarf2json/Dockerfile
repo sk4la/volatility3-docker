@@ -2,9 +2,9 @@
 #
 # See https://github.com/sk4la/volatility3-docker for more details.
 
-ARG ALPINE_VERSION="latest"
+ARG DOCKER_TAG_ALPINE="latest"
 
-FROM "alpine:${ALPINE_VERSION}" AS stage
+FROM "alpine:${DOCKER_TAG_ALPINE}" AS stage
 
 ARG GIT_TAG_DWARF2JSON="master"
 
@@ -24,7 +24,7 @@ RUN go build -ldflags="-s -w"
 RUN apk --purge del \
         stage
 
-FROM "alpine:${ALPINE_VERSION}" AS production
+FROM "alpine:${DOCKER_TAG_ALPINE}" AS production
 
 ARG INSTALL_GROUP="ci"
 ARG INSTALL_USER="unprivileged"

@@ -2,9 +2,9 @@
 #
 # See https://github.com/sk4la/volatility3-docker for more details.
 
-ARG ALPINE_VERSION="latest"
+ARG DOCKER_TAG_ALPINE="latest"
 
-FROM "alpine:${ALPINE_VERSION}" AS stage
+FROM "alpine:${DOCKER_TAG_ALPINE}" AS stage
 
 ARG GIT_TAG_JPCERT_SYMBOLS="main"
 ARG GIT_TAG_PYTHON_YARA="master"
@@ -50,7 +50,7 @@ RUN curl --location --max-redirs 1 \
 RUN apk --purge del \
         stage
 
-FROM "alpine:${ALPINE_VERSION}" AS production
+FROM "alpine:${DOCKER_TAG_ALPINE}" AS production
 
 ARG GIT_TAG_VOLATILITY3="stable"
 

@@ -1,4 +1,4 @@
-name: dwarf2json
+name: dwarf2json-edge
 
 on:
   workflow_dispatch:
@@ -13,9 +13,10 @@ on:
       - README.md
 
 env:
-  DOCKER_TAG_ALPINE: "3.18"
+  DOCKER_TAG_ALPINE: latest
+  # No tags/releases declared in the repository so we use the `edge` tag that follows the main development branch.
   DOCKER_TAG_DWARF2JSON: edge
-  # No tags declared in the repository so we use the development branch.
+  # No tags/releases declared in the repository so we use the development branch.
   GIT_TAG_DWARF2JSON: master
 
 jobs:
@@ -49,7 +50,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:${{ env.DOCKER_TAG_DWARF2JSON }}
           build-args: |
-            ALPINE_VERSION=${{ env.DOCKER_TAG_ALPINE }}
+            DOCKER_TAG_ALPINE=${{ env.DOCKER_TAG_ALPINE }}
             GIT_TAG_DWARF2JSON=${{ env.GIT_TAG_DWARF2JSON }}
             PRODUCT_BUILD_COMMIT=${{ github.sha }}
             PRODUCT_BUILD_DATE=${{ steps.date.outputs.date }}

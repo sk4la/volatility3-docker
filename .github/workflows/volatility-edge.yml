@@ -1,4 +1,4 @@
-name: volatility
+name: volatility-edge
 
 on:
   workflow_dispatch:
@@ -13,11 +13,12 @@ on:
       - README.md
 
 env:
-  # Stuck at this version since Alpine Linux no longer distributes Python 2 through its official
-  # repositories.
-  DOCKER_TAG_ALPINE: "3.15.4"
+  # Stuck at this minor version since Alpine Linux no longer distributes Python 2 through its official repositories.
+  DOCKER_TAG_ALPINE: "3.15"
+  # No new tags/releases declared in the repository so we use the `edge` tag that follows the main development branch.
   DOCKER_TAG_VOLATILITY: edge
   GIT_TAG_PYTHON_YARA: v4.4.0
+  # No new tags/releases declared in the repository so we use the development branch.
   GIT_TAG_VOLATILITY: master
 
 jobs:
@@ -51,7 +52,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:${{ env.DOCKER_TAG_VOLATILITY }}
           build-args: |
-            ALPINE_VERSION=${{ env.DOCKER_TAG_ALPINE }}
+            DOCKER_TAG_ALPINE=${{ env.DOCKER_TAG_ALPINE }}
             GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}
             GIT_TAG_VOLATILITY=${{ env.GIT_TAG_VOLATILITY }}
             PRODUCT_BUILD_COMMIT=${{ github.sha }}

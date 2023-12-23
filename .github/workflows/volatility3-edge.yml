@@ -1,9 +1,9 @@
-name: volatility3
+name: volatility3-edge
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: 0 2 * * 1,3,5
+    - cron: 0 2 * * 7
   push:
     branches:
       - development
@@ -15,8 +15,9 @@ on:
       - README.md
 
 env:
-  DOCKER_TAG_ALPINE: "3.18"
+  DOCKER_TAG_ALPINE: latest
   DOCKER_TAG_VOLATILITY3: edge
+  # No tags/releases declared in the repository so we use the development branch.
   GIT_TAG_JPCERT_SYMBOLS: main
   GIT_TAG_PYTHON_YARA: v4.4.0
   GIT_TAG_VOLATILITY3: develop
@@ -52,7 +53,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:${{ env.DOCKER_TAG_VOLATILITY3 }}
           build-args: |
-            ALPINE_VERSION=${{ env.DOCKER_TAG_ALPINE }}
+            DOCKER_TAG_ALPINE=${{ env.DOCKER_TAG_ALPINE }}
             GIT_TAG_JPCERT_SYMBOLS=${{ env.GIT_TAG_JPCERT_SYMBOLS }}
             GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}
             GIT_TAG_VOLATILITY3=${{ env.GIT_TAG_VOLATILITY3 }}

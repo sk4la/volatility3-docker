@@ -14,9 +14,8 @@ RUN apk add --no-cache --virtual=stage \
         git \
         linux-headers \
         musl-dev \
+        py3-pip \
         python3-dev
-
-RUN python3 -m ensurepip --default-pip
 
 WORKDIR /stage
 
@@ -84,6 +83,15 @@ RUN python2 -m ensurepip --default-pip && \
         pycoin \
         pycrypto \
         ujson
+
+RUN python2 -m pip install --no-cache --upgrade \
+        colorama \
+        construct \
+        haystack \
+        pysocks \
+        pysphere \
+        requests \
+        simplejson
 
 WORKDIR "${INSTALL_PREFIX}/lib"
 

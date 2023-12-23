@@ -15,10 +15,9 @@ RUN apk add --no-cache --virtual=stage \
         git \
         linux-headers \
         musl-dev \
+        py3-pip \
         python3-dev \
         unzip
-
-RUN python3 -m ensurepip --default-pip
 
 WORKDIR /stage
 
@@ -69,6 +68,7 @@ RUN apk add --no-cache \
         capstone \
         dumb-init \
         less \
+        py3-pip \
         python3 && \
     apk add --no-cache --virtual=stage \
         gcc \
@@ -83,8 +83,7 @@ ENV PYTHONFAULTHANDLER="1"
 ENV PYTHONHASHSEED="random"
 ENV PYTHONUNBUFFERED="1"
 
-RUN python3 -m ensurepip --default-pip && \
-    python3 -m pip install --no-cache --upgrade \
+RUN python3 -m pip install --no-cache --upgrade \
         wheel && \
     python3 -m pip install --no-cache --upgrade \
         pefile \

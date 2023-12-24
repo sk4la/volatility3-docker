@@ -68,7 +68,9 @@ RUN apk add --no-cache \
         capstone \
         dumb-init \
         less \
+        py3-pefile \
         py3-pip \
+        py3-pycryptodome \
         python3 && \
     apk add --no-cache --virtual=stage \
         gcc \
@@ -82,12 +84,6 @@ RUN apk add --no-cache \
 ENV PYTHONFAULTHANDLER="1"
 ENV PYTHONHASHSEED="random"
 ENV PYTHONUNBUFFERED="1"
-
-RUN python3 -m pip install --no-cache --upgrade \
-        wheel && \
-    python3 -m pip install --no-cache --upgrade \
-        pefile \
-        pycryptodome
 
 WORKDIR "${INSTALL_PREFIX}/lib"
 
@@ -109,8 +105,7 @@ RUN git clone --branch="${GIT_TAG_VOLATILITY3}" --depth=1 --single-branch \
 
 WORKDIR "${INSTALL_PREFIX}/lib/volatility3"
 
-RUN python3 -m pip install --upgrade pip && \
-    python3 -m pip install --requirement requirements.txt && \
+RUN python3 -m pip install --break-system-packages --requirement requirements.txt && \
     python3 setup.py install && \
     chmod 0755 \
         vol.py \

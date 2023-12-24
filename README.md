@@ -12,7 +12,7 @@ All images are directly available on Docker Hub:
 
 By the way, [why are these images not (yet) official?](https://github.com/volatilityfoundation/volatility3/pull/92)
 
-## What's in the Box?
+## What's in the box?
 
 - [`sk4la/volatility3`](https://hub.docker.com/r/sk4la/volatility) ⭐ (version [2.5.0](https://github.com/volatilityfoundation/volatility3/releases/tag/v2.5.0) from September 27, 2023)
   - The latest release of the official [Volatility 3](https://github.com/volatilityfoundation/volatility3) project
@@ -20,7 +20,7 @@ By the way, [why are these images not (yet) official?](https://github.com/volati
   - The [official symbol tables](https://github.com/volatilityfoundation/volatility3#symbol-tables) for Windows, macOS and GNU/Linux provided by the Volatility Foundation
   - The [symbol tables](https://github.com/JPCERTCC/Windows-Symbol-Tables) provided by the [JPCERT/CC](https://www.jpcert.or.jp/) for the ongoing Windows 11+ support
 
-> The `latest` and `stable` tags, as well as the literal version number (e.g `2.5.0`) all point to the [latest official release](https://github.com/volatilityfoundation/volatility3/releases). In order to follow the development cycle of Volatility 3, an `edge` tag has been added, which points to the current state of the `master` branch—which could be unstable. Power-users should feel free to use this one at their own expense.
+> The `latest` and `stable` tags, as well as the literal version number (e.g `2.5.0`) all point to the [latest official release](https://github.com/volatilityfoundation/volatility3/releases). In order to follow the development cycle of Volatility 3, an `edge` tag has been added, which points to the current state of the `master` branch—which could be unstable. Power-users should feel free to use this one at their own expense. The `sk4la/volatility3` and `sk4la/volatility3:edge` images are built every week in order to include the newest symbols.
 
 - [`sk4la/volatility`](https://hub.docker.com/r/sk4la/volatility)
   - The latest release of the official [Volatility](https://github.com/volatilityfoundation/volatility) project (unmaintained since 2020)
@@ -208,6 +208,25 @@ USER unprivileged
 Then, build the image by executing the `docker image build --tag volatility3-overloaded .` command. The newly-created Docker image should then appear in the local repository.
 
 > Please have a look at the [original `Dockerfile`](src/volatility3/Dockerfile) if you need a hint on how everything is setup.
+
+</details>
+
+<details>
+  <summary>Example #5: Using community plugins with Voltility 2</summary>
+
+### Example #5: Using community plugins with Voltility 2
+
+The `sk4la/volatility` image includes all community plugins listed in the [volatilityfoundation/community](https://github.com/volatilityfoundation/community) repository. By default, those are stored in `/usr/local/lib/volatility/contrib/plugins/community`.
+
+> You can list all included plugins using the `--help` or `--info` flags (e.g. `podman run sk4la/volatility:edge --plugins=/usr/local/lib/volatility/contrib/plugins --info`). The loading order is non-deterministic and some plugins fail to load because of missing dependencies (some are just not on PyPI anymore) or because their design is not quite suitable for distribution, so you may need to run it multiple times for it to load the plugin you are looking for. I advise instead using each module individually in order to avoid loading dysfunctional plugins.
+
+To load a specific community plugin (example with JPCERT's APT17 plugin):
+
+```sh
+docker container run sk4la/volatility:edge --plugins /usr/local/lib/volatility/contrib/plugins/community/JPCERT apt17scan --help
+```
+
+Please note that many plugins made for Volatility 2 have not been maintained for years and might be dysfunctional.
 
 </details>
 

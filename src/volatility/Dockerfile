@@ -86,7 +86,7 @@ RUN python2 -m ensurepip --default-pip && \
 
 RUN python2 -m pip install --no-cache --upgrade \
         colorama \
-        construct \
+        construct==2.5.3 \
         haystack \
         pysocks \
         pysphere \

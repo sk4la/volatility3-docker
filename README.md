@@ -212,9 +212,9 @@ Then, build the image by executing the `docker image build --tag volatility3-ove
 </details>
 
 <details>
-  <summary>Example #5: Using community plugins with Voltility 2</summary>
+  <summary>Example #5: Using community plugins with Volatility 2</summary>
 
-### Example #5: Using community plugins with Voltility 2
+### Example #5: Using community plugins with Volatility 2
 
 The `sk4la/volatility` image includes all community plugins listed in the [volatilityfoundation/community](https://github.com/volatilityfoundation/community) repository. By default, those are stored in `/usr/local/lib/volatility/contrib/plugins/community`.
 

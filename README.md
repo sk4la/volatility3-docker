@@ -216,17 +216,34 @@ Then, build the image by executing the `docker image build --tag volatility3-ove
 
 ### Example #5: Using community plugins with Volatility 2
 
-The `sk4la/volatility` image includes all community plugins listed in the [volatilityfoundation/community](https://github.com/volatilityfoundation/community) repository. By default, those are stored in `/usr/local/lib/volatility/contrib/plugins/community`.
+The `sk4la/volatility` image includes all community plugins from the official [volatilityfoundation/community](https://github.com/volatilityfoundation/community) repository. By default, those are stored in `/usr/local/share/volatility/plugins/community`.
 
-> You can list all included plugins using the `--help` or `--info` flags (e.g. `podman run sk4la/volatility:edge --plugins=/usr/local/lib/volatility/contrib/plugins --info`). The loading order is non-deterministic and some plugins fail to load because of missing dependencies (some are just not on PyPI anymore) or because their design is not quite suitable for distribution, so you may need to run it multiple times for it to load the plugin you are looking for. I advise instead using each module individually in order to avoid loading dysfunctional plugins.
+> You can list all included plugins using the `--help` or `--info` flags (e.g. `podman run sk4la/volatility:edge --plugins=/usr/local/share/volatility/plugins --info`). The loading order is non-deterministic and some plugins fail to load because of missing dependencies (some are just not on PyPI anymore) or because their design is not quite suitable for distribution, so you may need to run it multiple times for it to load the plugin you are looking for. I advise instead using each plugin individually in order to avoid loading dysfunctional plugins.
 
 To load a specific community plugin (example with JPCERT's APT17 plugin):
 
 ```sh
-docker container run sk4la/volatility:edge --plugins /usr/local/lib/volatility/contrib/plugins/community/JPCERT apt17scan --help
+docker container run sk4la/volatility:edge --plugins /usr/local/share/volatility/plugins/community/JPCERT apt17scan --help
 ```
 
 Please note that many plugins made for Volatility 2 have not been maintained for years and might be dysfunctional.
+
+</details>
+
+<details>
+  <summary>Example #6: Using community plugins with Volatility 3</summary>
+
+### Example #6: Using community plugins with Volatility 3
+
+The `sk4la/volatility3` and `sk4la/volatility3:edge` images include all community plugins from the official [volatilityfoundation/community3](https://github.com/volatilityfoundation/community3) repository. By default, those are stored in `/usr/local/share/volatility3/plugins/community3`.
+
+> You can list all included plugins using the `--help` flag (e.g. `podman run sk4la/volatility3:edge --plugin-dirs=/usr/local/share/volatility3/plugins --help`). Please note that many of these plugins have not been maintained a while and might be dysfunctional. I advise instead using each plugin individually in order to avoid loading dysfunctional plugins.
+
+To load a specific community plugin (example with the Multi YARA plugin):
+
+```sh
+docker container run sk4la/volatility3:edge --plugin-dirs /usr/local/share/volatility3/plugins/community3/Silva_Multi_Yara/ multiyara --help
+```
 
 </details>
 

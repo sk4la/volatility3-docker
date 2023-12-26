@@ -52,6 +52,7 @@ RUN apk --purge del \
 FROM "alpine:${DOCKER_TAG_ALPINE}" AS production
 
 ARG GIT_TAG_VOLATILITY3="stable"
+ARG GIT_TAG_VOLATILITY3_COMMUNITY="master"
 
 ARG INSTALL_GROUP="ci"
 ARG INSTALL_USER="unprivileged"
@@ -59,6 +60,8 @@ ARG INSTALL_PREFIX="/usr/local"
 
 ENV LANG="C.UTF-8"
 ENV LC_ALL="C.UTF-8"
+
+VOLUME /tmp /var/tmp
 
 RUN addgroup -S "${INSTALL_GROUP}" && \
     adduser -DG -S "${INSTALL_USER}" -G "${INSTALL_GROUP}" -g "Unprivileged user,,,,"
@@ -71,6 +74,7 @@ RUN apk add --no-cache \
         py3-pefile \
         py3-pip \
         py3-pycryptodome \
+        py3-pygit2 \
         python3 && \
     apk add --no-cache --virtual=stage \
         gcc \
@@ -120,6 +124,11 @@ RUN python3 -m pip install --break-system-packages --requirement requirements.tx
         "${INSTALL_PREFIX}/bin/pdbconv"
 
 ENV PATH="${INSTALL_PREFIX}/bin:${PATH}"
+
+WORKDIR "${INSTALL_PREFIX}/share/volatility3/plugins"
+
+RUN git clone --branch="${GIT_TAG_VOLATILITY3_COMMUNITY}" --depth=1 --single-branch \
+        https://github.com/volatilityfoundation/community3.git
 
 RUN apk --purge del \
         stage

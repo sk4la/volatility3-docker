@@ -33,6 +33,8 @@ ARG INSTALL_PREFIX="/usr/local"
 ENV LANG="C.UTF-8"
 ENV LC_ALL="C.UTF-8"
 
+VOLUME /tmp /var/tmp
+
 RUN apk add --no-cache \
         dumb-init
 

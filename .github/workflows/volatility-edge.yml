@@ -20,6 +20,8 @@ env:
   GIT_TAG_PYTHON_YARA: v4.4.0
   # No new tags/releases declared in the repository so we use the development branch.
   GIT_TAG_VOLATILITY: master
+  # No new tags/releases declared in the repository so we use the development branch.
+  GIT_TAG_VOLATILITY_COMMUNITY: master
 
 jobs:
   docker:
@@ -55,6 +57,7 @@ jobs:
             DOCKER_TAG_ALPINE=${{ env.DOCKER_TAG_ALPINE }}
             GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}
             GIT_TAG_VOLATILITY=${{ env.GIT_TAG_VOLATILITY }}
+            GIT_TAG_VOLATILITY_COMMUNITY=${{ env.GIT_TAG_VOLATILITY_COMMUNITY }}
             PRODUCT_BUILD_COMMIT=${{ github.sha }}
             PRODUCT_BUILD_DATE=${{ steps.date.outputs.date }}
 

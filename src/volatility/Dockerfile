@@ -41,6 +41,8 @@ ARG INSTALL_PREFIX="/usr/local"
 ENV LANG="C.UTF-8"
 ENV LC_ALL="C.UTF-8"
 
+VOLUME /tmp /var/tmp
+
 RUN addgroup -S "${INSTALL_GROUP}" && \
     adduser -DG -S "${INSTALL_USER}" -G "${INSTALL_GROUP}" -g "Unprivileged user,,,,"
 
@@ -124,7 +126,7 @@ RUN python2 setup.py install && \
 
 ENV PATH="${INSTALL_PREFIX}/bin:${PATH}"
 
-WORKDIR "${INSTALL_PREFIX}/lib/volatility/contrib/plugins"
+WORKDIR "${INSTALL_PREFIX}/share/volatility/plugins"
 
 RUN git clone --branch="${GIT_TAG_VOLATILITY_COMMUNITY}" --depth=1 --single-branch \
         https://github.com/volatilityfoundation/community.git

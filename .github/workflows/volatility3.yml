@@ -21,6 +21,8 @@ env:
   GIT_TAG_JPCERT_SYMBOLS: main
   GIT_TAG_PYTHON_YARA: v4.4.0
   GIT_TAG_VOLATILITY3: v2.5.0
+  # No tags/releases declared in the repository so we use the development branch.
+  GIT_TAG_VOLATILITY3_COMMUNITY: master
 
 jobs:
   docker:
@@ -60,6 +62,7 @@ jobs:
             GIT_TAG_JPCERT_SYMBOLS=${{ env.GIT_TAG_JPCERT_SYMBOLS }}
             GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}
             GIT_TAG_VOLATILITY3=${{ env.GIT_TAG_VOLATILITY3 }}
+            GIT_TAG_VOLATILITY3_COMMUNITY=${{ env.GIT_TAG_VOLATILITY3_COMMUNITY }}
             PRODUCT_BUILD_COMMIT=${{ github.sha }}
             PRODUCT_BUILD_DATE=${{ steps.date.outputs.date }}
 

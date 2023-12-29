@@ -155,6 +155,12 @@ RUN find . -type d -exec chmod 0777 "{}" \; && \
     find . -type f -exec chmod 0666 "{}" \; && \
     find /usr/lib/python3* -type d -name symbols -exec chmod 0777 "{}" \;
 
+# Prebuild the local symbol database (which takes a few minutes).
+RUN volatility3 -vvv frameworkinfo.FrameworkInfo && \
+    mkdir -p /home/${INSTALL_USER}/.cache/volatility3 && \
+    cp ~/.cache/volatility3/identifier.cache /home/${INSTALL_USER}/.cache/volatility3/ && \
+    chown -R "${INSTALL_USER}:${INSTALL_GROUP}" /home/${INSTALL_USER}/.cache
+
 COPY --chown=root:root \
          assets/aliases.sh \
          /etc/profile.d/

@@ -1,4 +1,4 @@
-name: dwarf2json-edge
+name: dwarf2json
 
 on:
   workflow_dispatch:

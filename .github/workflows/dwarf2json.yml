@@ -1,4 +1,4 @@
-name: volatility-edge
+name: dwarf2json-edge
 
 on:
   workflow_dispatch:
@@ -8,20 +8,14 @@ on:
       - master
       - staging
     paths:
-      - .github/workflows/volatility.yml
-      - src/volatility/**
+      - .github/workflows/dwarf2json.yml
+      - src/dwarf2json/**
       - README.md
 
 env:
-  # Stuck at this minor version since Alpine Linux no longer distributes Python 2 through its official repositories.
-  DOCKER_TAG_ALPINE: "3.15"
-  # No new tags/releases declared in the repository so we use the `edge` tag that follows the main development branch.
-  DOCKER_TAG_VOLATILITY: edge
-  GIT_TAG_PYTHON_YARA: v4.5.0
-  # No new tags/releases declared in the repository so we use the development branch.
-  GIT_TAG_VOLATILITY: master
-  # No new tags/releases declared in the repository so we use the development branch.
-  GIT_TAG_VOLATILITY_COMMUNITY: master
+  DOCKER_TAG_ALPINE: latest
+  DOCKER_TAG_DWARF2JSON: "0.8.0"
+  GIT_TAG_DWARF2JSON: v0.8.0
 
 jobs:
   docker:
@@ -46,25 +40,23 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Build and push ${{ secrets.DOCKER_HUB_USERNAME }}/volatility
+      - name: Build and push ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
         uses: docker/build-push-action@v5
         with:
-          context: src/volatility
+          context: src/dwarf2json
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:${{ env.DOCKER_TAG_VOLATILITY }}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:${{ env.DOCKER_TAG_DWARF2JSON }}
           build-args: |
             DOCKER_TAG_ALPINE=${{ env.DOCKER_TAG_ALPINE }}
-            GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}
-            GIT_TAG_VOLATILITY=${{ env.GIT_TAG_VOLATILITY }}
-            GIT_TAG_VOLATILITY_COMMUNITY=${{ env.GIT_TAG_VOLATILITY_COMMUNITY }}
+            GIT_TAG_DWARF2JSON=${{ env.GIT_TAG_DWARF2JSON }}
             PRODUCT_BUILD_COMMIT=${{ github.sha }}
             PRODUCT_BUILD_DATE=${{ steps.date.outputs.date }}
 
-      - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/volatility
+      - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
         uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          repository: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility
+          repository: ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
           short-description: ${{ github.event.repository.description }}

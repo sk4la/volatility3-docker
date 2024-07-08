@@ -14,13 +14,13 @@ By the way, [why are these images not (yet) official?](https://github.com/volati
 
 ## What's in the box?
 
-- [`sk4la/volatility3`](https://hub.docker.com/r/sk4la/volatility) ⭐ (version [2.5.0](https://github.com/volatilityfoundation/volatility3/releases/tag/v2.5.0) from September 27, 2023)
+- [`sk4la/volatility3`](https://hub.docker.com/r/sk4la/volatility) ⭐ (version [2.7.0](https://github.com/volatilityfoundation/volatility3/releases/tag/v2.7.0) from May 29, 2024)
   - The latest release of the official [Volatility 3](https://github.com/volatilityfoundation/volatility3) project
   - The [community-maintained plugins](https://github.com/volatilityfoundation/community3) for Volatility 3
   - The [official symbol tables](https://github.com/volatilityfoundation/volatility3#symbol-tables) for Windows, macOS and GNU/Linux provided by the Volatility Foundation
   - The [symbol tables](https://github.com/JPCERTCC/Windows-Symbol-Tables) provided by the [JPCERT/CC](https://www.jpcert.or.jp/) for the ongoing Windows 11+ support
 
-> The `latest` and `stable` tags, as well as the literal version number (e.g `2.5.0`) all point to the [latest official release](https://github.com/volatilityfoundation/volatility3/releases). In order to follow the development cycle of Volatility 3, an `edge` tag has been added, which points to the current state of the `master` branch—which could be unstable. Power-users should feel free to use this one at their own expense. The `sk4la/volatility3` and `sk4la/volatility3:edge` images are built every week in order to include the newest symbols.
+> The `latest` and `stable` tags, as well as the literal version number (e.g `2.7.0`) all point to the [latest official release](https://github.com/volatilityfoundation/volatility3/releases). In order to follow the development cycle of Volatility 3, an `edge` tag has been added, which points to the current state of the `master` branch—which could be unstable. Power-users should feel free to use this one at their own expense. The `sk4la/volatility3` and `sk4la/volatility3:edge` images are built every week in order to include the newest symbols.
 
 - [`sk4la/volatility`](https://hub.docker.com/r/sk4la/volatility)
   - The latest release of the official [Volatility](https://github.com/volatilityfoundation/volatility) project (unmaintained since 2020)

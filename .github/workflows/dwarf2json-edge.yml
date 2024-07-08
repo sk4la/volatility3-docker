@@ -14,9 +14,7 @@ on:
 
 env:
   DOCKER_TAG_ALPINE: latest
-  # No tags/releases declared in the repository so we use the `edge` tag that follows the main development branch.
   DOCKER_TAG_DWARF2JSON: edge
-  # No tags/releases declared in the repository so we use the development branch.
   GIT_TAG_DWARF2JSON: master
 
 jobs:

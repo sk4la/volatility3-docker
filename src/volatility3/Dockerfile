@@ -71,6 +71,7 @@ RUN apk add --no-cache \
         capstone \
         dumb-init \
         less \
+        py3-capstone \
         py3-pefile \
         py3-pip \
         py3-pycryptodome \

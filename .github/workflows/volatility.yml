@@ -1,4 +1,4 @@
-name: dwarf2json
+name: volatility-edge
 
 on:
   workflow_dispatch:
@@ -8,14 +8,18 @@ on:
       - master
       - staging
     paths:
-      - .github/workflows/dwarf2json.yml
-      - src/dwarf2json/**
+      - .github/workflows/volatility.yml
+      - src/volatility/**
       - README.md
 
 env:
-  DOCKER_TAG_ALPINE: latest
-  DOCKER_TAG_DWARF2JSON: "0.9.0"
-  GIT_TAG_DWARF2JSON: v0.9.0
+  # Stuck at this minor version since Alpine Linux no longer distributes Python 2 through its official repositories.
+  DOCKER_TAG_ALPINE: "3.15"
+  DOCKER_TAG_VOLATILITY: "2.6.1"
+  GIT_TAG_PYTHON_YARA: v4.5.1
+  GIT_TAG_VOLATILITY: "2.6.1"
+  # No new tags/releases declared in the repository so we use the development branch.
+  GIT_TAG_VOLATILITY_COMMUNITY: master
 
 jobs:
   docker:
@@ -40,23 +44,25 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Build and push ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
+      - name: Build and push ${{ secrets.DOCKER_HUB_USERNAME }}/volatility
         uses: docker/build-push-action@v5
         with:
-          context: src/dwarf2json
+          context: src/volatility
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:${{ env.DOCKER_TAG_DWARF2JSON }}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:${{ env.DOCKER_TAG_VOLATILITY }}
           build-args: |
             DOCKER_TAG_ALPINE=${{ env.DOCKER_TAG_ALPINE }}
-            GIT_TAG_DWARF2JSON=${{ env.GIT_TAG_DWARF2JSON }}
+            GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}
+            GIT_TAG_VOLATILITY=${{ env.GIT_TAG_VOLATILITY }}
+            GIT_TAG_VOLATILITY_COMMUNITY=${{ env.GIT_TAG_VOLATILITY_COMMUNITY }}
             PRODUCT_BUILD_COMMIT=${{ github.sha }}
             PRODUCT_BUILD_DATE=${{ steps.date.outputs.date }}
 
-      - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
+      - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/volatility
         uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          repository: ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
+          repository: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility
           short-description: ${{ github.event.repository.description }}

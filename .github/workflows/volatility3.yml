@@ -16,11 +16,11 @@ on:
 
 env:
   DOCKER_TAG_ALPINE: latest
-  DOCKER_TAG_VOLATILITY3: "2.7.0"
+  DOCKER_TAG_VOLATILITY3: "2.11.0"
   # No tags/releases declared in the repository so we use the development branch.
   GIT_TAG_JPCERT_SYMBOLS: main
-  GIT_TAG_PYTHON_YARA: v4.5.0
-  GIT_TAG_VOLATILITY3: v2.7.0
+  GIT_TAG_PYTHON_YARA: v4.5.1
+  GIT_TAG_VOLATILITY3: v2.11.0
   # No tags/releases declared in the repository so we use the development branch.
   GIT_TAG_VOLATILITY3_COMMUNITY: master
 

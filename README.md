@@ -18,7 +18,7 @@ By the way, [why are these images not (yet) official?](https://github.com/volati
   - The latest release of the official [Volatility 3](https://github.com/volatilityfoundation/volatility3) project
   - The [community-maintained plugins](https://github.com/volatilityfoundation/community3) for Volatility 3
 
-> Since many community plugins are either one-time proof-of-concept contributions or are maintained independently by their respective authors, this image includes only the code explicitly referenced by the [volatilityfoundation/community3](https://github.com/volatilityfoundation/community3) repository.
+> :warning: Since many community plugins are either one-time proof-of-concept contributions or are maintained independently by their respective authors, this image includes only the code explicitly referenced by the [volatilityfoundation/community3](https://github.com/volatilityfoundation/community3) repository—which does not necessarily include the actual code for the referenced plugins.
 
   - The [official symbol tables](https://github.com/volatilityfoundation/volatility3#symbol-tables) for Windows, macOS and GNU/Linux provided by the Volatility Foundation
   - The [symbol tables](https://github.com/JPCERTCC/Windows-Symbol-Tables) provided by the [JPCERT/CC](https://www.jpcert.or.jp/) for the ongoing Windows 11+ support

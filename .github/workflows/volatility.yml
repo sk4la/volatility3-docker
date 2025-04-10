@@ -1,4 +1,4 @@
-name: volatility-edge
+name: volatility
 
 on:
   workflow_dispatch:

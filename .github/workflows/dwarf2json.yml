@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Build and push ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: src/dwarf2json
           platforms: linux/amd64,linux/arm64/v8

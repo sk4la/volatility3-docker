@@ -45,7 +45,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Build and push ${{ secrets.DOCKER_HUB_USERNAME }}/volatility
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: src/volatility
           platforms: linux/amd64,linux/arm64/v8

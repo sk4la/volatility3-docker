@@ -50,7 +50,10 @@ jobs:
           context: src/volatility
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:${{ env.DOCKER_TAG_VOLATILITY }}
+          tags: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:${{ env.DOCKER_TAG_VOLATILITY }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:stable
+            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:latest
           build-args: |
             DOCKER_TAG_ALPINE=${{ env.DOCKER_TAG_ALPINE }}
             GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}

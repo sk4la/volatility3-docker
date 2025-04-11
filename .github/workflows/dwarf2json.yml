@@ -46,7 +46,6 @@ jobs:
           context: src/dwarf2json
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:${{ env.DOCKER_TAG_DWARF2JSON }}
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:${{ env.DOCKER_TAG_DWARF2JSON }}
             ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:stable

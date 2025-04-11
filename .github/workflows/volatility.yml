@@ -1,28 +1,25 @@
-name: volatility3
+name: volatility
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: 0 2 * * 0
   push:
     branches:
       - development
       - master
       - staging
     paths:
-      - .github/workflows/volatility3.yml
-      - src/volatility3/**
+      - .github/workflows/volatility.yml
+      - src/volatility/**
       - README.md
 
 env:
-  DOCKER_TAG_ALPINE: latest
-  DOCKER_TAG_VOLATILITY3: "2.11.0"
-  # No tags/releases declared in the repository so we use the development branch.
-  GIT_TAG_JPCERT_SYMBOLS: main
+  # Stuck at this minor version since Alpine Linux no longer distributes Python 2 through its official repositories.
+  DOCKER_TAG_ALPINE: "3.15"
+  DOCKER_TAG_VOLATILITY: "2.6.1"
   GIT_TAG_PYTHON_YARA: v4.5.1
-  GIT_TAG_VOLATILITY3: v2.11.0
-  # No tags/releases declared in the repository so we use the development branch.
-  GIT_TAG_VOLATILITY3_COMMUNITY: master
+  GIT_TAG_VOLATILITY: "2.6.1"
+  # No new tags/releases declared in the repository so we use the development branch.
+  GIT_TAG_VOLATILITY_COMMUNITY: master
 
 jobs:
   docker:
@@ -47,29 +44,28 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Build and push ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3
-        uses: docker/build-push-action@v6
+      - name: Build and push ${{ secrets.DOCKER_HUB_USERNAME }}/volatility
+        uses: docker/build-push-action@v5
         with:
-          context: src/volatility3
+          context: src/volatility
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:${{ env.DOCKER_TAG_VOLATILITY3 }}
-            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:stable
-            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:latest
+            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:${{ env.DOCKER_TAG_VOLATILITY }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:stable
+            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility:latest
           build-args: |
             DOCKER_TAG_ALPINE=${{ env.DOCKER_TAG_ALPINE }}
-            GIT_TAG_JPCERT_SYMBOLS=${{ env.GIT_TAG_JPCERT_SYMBOLS }}
             GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}
-            GIT_TAG_VOLATILITY3=${{ env.GIT_TAG_VOLATILITY3 }}
-            GIT_TAG_VOLATILITY3_COMMUNITY=${{ env.GIT_TAG_VOLATILITY3_COMMUNITY }}
+            GIT_TAG_VOLATILITY=${{ env.GIT_TAG_VOLATILITY }}
+            GIT_TAG_VOLATILITY_COMMUNITY=${{ env.GIT_TAG_VOLATILITY_COMMUNITY }}
             PRODUCT_BUILD_COMMIT=${{ github.sha }}
             PRODUCT_BUILD_DATE=${{ steps.date.outputs.date }}
 
-      - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3
+      - name: Update Docker Hub repository description for ${{ secrets.DOCKER_HUB_USERNAME }}/volatility
         uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          repository: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3
+          repository: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility
           short-description: ${{ github.event.repository.description }}

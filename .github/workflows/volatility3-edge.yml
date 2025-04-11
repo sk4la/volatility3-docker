@@ -19,7 +19,7 @@ env:
   DOCKER_TAG_VOLATILITY3: edge
   # No tags/releases declared in the repository so we use the development branch.
   GIT_TAG_JPCERT_SYMBOLS: main
-  GIT_TAG_PYTHON_YARA: v4.5.0
+  GIT_TAG_PYTHON_YARA: v4.5.1
   GIT_TAG_VOLATILITY3: develop
   # No tags/releases declared in the repository so we use the development branch.
   GIT_TAG_VOLATILITY3_COMMUNITY: master

@@ -14,8 +14,8 @@ on:
 
 env:
   DOCKER_TAG_ALPINE: latest
-  DOCKER_TAG_DWARF2JSON: "0.8.0"
-  GIT_TAG_DWARF2JSON: v0.8.0
+  DOCKER_TAG_DWARF2JSON: "0.9.0"
+  GIT_TAG_DWARF2JSON: v0.9.0
 
 jobs:
   docker:
@@ -46,7 +46,10 @@ jobs:
           context: src/dwarf2json
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:${{ env.DOCKER_TAG_DWARF2JSON }}
+          tags: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:${{ env.DOCKER_TAG_DWARF2JSON }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:stable
+            ${{ secrets.DOCKER_HUB_USERNAME }}/dwarf2json:latest
           build-args: |
             DOCKER_TAG_ALPINE=${{ env.DOCKER_TAG_ALPINE }}
             GIT_TAG_DWARF2JSON=${{ env.GIT_TAG_DWARF2JSON }}

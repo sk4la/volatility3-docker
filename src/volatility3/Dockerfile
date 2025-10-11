@@ -111,11 +111,13 @@ RUN git clone --branch="${GIT_TAG_VOLATILITY3}" --depth=1 --single-branch \
 WORKDIR "${INSTALL_PREFIX}/lib/volatility3"
 
 RUN if [[ "${GIT_TAG_VOLATILITY3}" == "develop" ]]; then \
-    python3 -m pip install --break-system-packages build; else \
-    python3 -m pip install --break-system-packages --requirement requirements.txt; fi && \
-    if [[ "${GIT_TAG_VOLATILITY3}" == "develop" ]]; then \
-    python3 -m build; else \
-    python3 setup.py install; fi && \
+    python3 -m pip install --break-system-packages build; \
+    python3 -m build; \
+    else \
+    
+    python3 -m pip install --break-system-packages .; \
+    fi && \
+    
     chmod 0755 \
         vol.py \
         volatility3/framework/symbols/windows/pdbconv.py && \
@@ -170,7 +172,10 @@ COPY --chown=root:root \
          assets/aliases.sh \
          /etc/profile.d/
 
-WORKDIR "${INSTALL_PREFIX}"
+RUN mkdir -p /workspace && \
+    chown "${INSTALL_USER}:${INSTALL_GROUP}" /workspace
+WORKDIR /workspace
+
 
 USER "${INSTALL_USER}"
 

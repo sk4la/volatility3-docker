@@ -53,9 +53,9 @@ jobs:
           context: src/volatility3
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags:
-            - ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:${{ env.GIT_TAG_VOLATILITY3 }}
-            - ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:edge
+          tags: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:${{ env.GIT_TAG_VOLATILITY3 }}
+            ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:edge
           build-args: |
             DOCKER_TAG_ALPINE=${{ env.DOCKER_TAG_ALPINE }}
             GIT_TAG_JPCERT_SYMBOLS=${{ env.GIT_TAG_JPCERT_SYMBOLS }}

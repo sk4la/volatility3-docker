@@ -16,13 +16,13 @@ on:
 
 env:
   DOCKER_TAG_ALPINE: latest
-  DOCKER_TAG_VOLATILITY3: edge
   # No tags/releases declared in the repository so we use the development branch.
   GIT_TAG_JPCERT_SYMBOLS: main
-  GIT_TAG_PYTHON_YARA: v4.5.1
+  GIT_TAG_PYTHON_YARA: v4.5.2
   GIT_TAG_VOLATILITY3: develop
   # No tags/releases declared in the repository so we use the development branch.
   GIT_TAG_VOLATILITY3_COMMUNITY: master
+  WORK_DIRECTORY: /workspace
 
 jobs:
   docker:
@@ -53,13 +53,16 @@ jobs:
           context: src/volatility3
           platforms: linux/amd64,linux/arm64/v8
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:${{ env.DOCKER_TAG_VOLATILITY3 }}
+          tags:
+            - ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:${{ env.GIT_TAG_VOLATILITY3 }}
+            - ${{ secrets.DOCKER_HUB_USERNAME }}/volatility3:edge
           build-args: |
             DOCKER_TAG_ALPINE=${{ env.DOCKER_TAG_ALPINE }}
             GIT_TAG_JPCERT_SYMBOLS=${{ env.GIT_TAG_JPCERT_SYMBOLS }}
             GIT_TAG_PYTHON_YARA=${{ env.GIT_TAG_PYTHON_YARA }}
             GIT_TAG_VOLATILITY3=${{ env.GIT_TAG_VOLATILITY3 }}
             GIT_TAG_VOLATILITY3_COMMUNITY=${{ env.GIT_TAG_VOLATILITY3_COMMUNITY }}
+            WORK_DIRECTORY=${{ env.WORK_DIRECTORY }}
             PRODUCT_BUILD_COMMIT=${{ github.sha }}
             PRODUCT_BUILD_DATE=${{ steps.date.outputs.date }}
 

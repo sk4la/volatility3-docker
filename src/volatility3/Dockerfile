@@ -58,6 +58,8 @@ ARG INSTALL_GROUP="ci"
 ARG INSTALL_USER="unprivileged"
 ARG INSTALL_PREFIX="/usr/local"
 
+ARG WORK_DIRECTORY="/workspace"
+
 ENV LANG="C.UTF-8"
 ENV LC_ALL="C.UTF-8"
 
@@ -111,11 +113,11 @@ RUN git clone --branch="${GIT_TAG_VOLATILITY3}" --depth=1 --single-branch \
 WORKDIR "${INSTALL_PREFIX}/lib/volatility3"
 
 RUN if [[ "${GIT_TAG_VOLATILITY3}" == "develop" ]]; then \
-    python3 -m pip install --break-system-packages build; else \
-    python3 -m pip install --break-system-packages --requirement requirements.txt; fi && \
-    if [[ "${GIT_TAG_VOLATILITY3}" == "develop" ]]; then \
-    python3 -m build; else \
-    python3 setup.py install; fi && \
+        python3 -m pip install --break-system-packages build && \
+        python3 -m build; \
+    else \
+        python3 -m pip install --break-system-packages .; \
+    fi && \
     chmod 0755 \
         vol.py \
         volatility3/framework/symbols/windows/pdbconv.py && \
@@ -160,7 +162,7 @@ RUN find . -type d -exec chmod 0777 "{}" \; && \
     find . -type f -exec chmod 0666 "{}" \; && \
     find /usr/lib/python3* -type d -name symbols -exec chmod 0777 "{}" \;
 
-# Prebuild the local symbol database (which takes a few minutes).
+# Prebuild the local symbol database (takes a few minutes).
 RUN volatility3 -vvv frameworkinfo.FrameworkInfo && \
     mkdir -p /home/${INSTALL_USER}/.cache/volatility3 && \
     cp ~/.cache/volatility3/identifier.cache /home/${INSTALL_USER}/.cache/volatility3/ && \
@@ -170,7 +172,10 @@ COPY --chown=root:root \
          assets/aliases.sh \
          /etc/profile.d/
 
-WORKDIR "${INSTALL_PREFIX}"
+RUN mkdir -p "${WORK_DIRECTORY}" && \
+    chown "${INSTALL_USER}:${INSTALL_GROUP}" "${WORK_DIRECTORY}"
+
+WORKDIR "${WORK_DIRECTORY}"
 
 USER "${INSTALL_USER}"
 
@@ -178,13 +183,11 @@ ENTRYPOINT [ "/usr/bin/dumb-init", "--", "volatility3" ]
 
 CMD [ "--help" ]
 
-ARG PRODUCT_AUTHOR="sk4la <sk4la.box+github@gmail.com>"
 ARG PRODUCT_REPOSITORY="https://github.com/sk4la/volatility3-docker.git"
 
 ARG PRODUCT_BUILD_DATE="-"
 ARG PRODUCT_BUILD_COMMIT="-"
 
-LABEL image.author="${PRODUCT_AUTHOR}"
 LABEL image.commit="${PRODUCT_BUILD_COMMIT}"
 LABEL image.date="${PRODUCT_BUILD_DATE}"
 LABEL image.repository="${PRODUCT_REPOSITORY}"

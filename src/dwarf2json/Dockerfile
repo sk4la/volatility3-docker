@@ -60,13 +60,11 @@ ENTRYPOINT [ "/usr/bin/dumb-init", "--", "dwarf2json" ]
 
 CMD [ "--help" ]
 
-ARG PRODUCT_AUTHOR="sk4la <sk4la.box+github@gmail.com>"
 ARG PRODUCT_REPOSITORY="https://github.com/sk4la/volatility3-docker.git"
 
 ARG PRODUCT_BUILD_DATE="-"
 ARG PRODUCT_BUILD_COMMIT="-"
 
-LABEL image.author="${PRODUCT_AUTHOR}"
 LABEL image.commit="${PRODUCT_BUILD_COMMIT}"
 LABEL image.date="${PRODUCT_BUILD_DATE}"
 LABEL image.repository="${PRODUCT_REPOSITORY}"

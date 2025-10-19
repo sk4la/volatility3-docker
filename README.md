@@ -14,7 +14,7 @@ By the way, [why are these images not (yet) official?](https://github.com/volati
 
 ## What's in the box?
 
-- [`sk4la/volatility3`](https://hub.docker.com/r/sk4la/volatility3) ⭐ (version [2.11.0](https://github.com/volatilityfoundation/volatility3/releases/tag/v2.11.0) from Jan 16, 2025)
+- [`sk4la/volatility3`](https://hub.docker.com/r/sk4la/volatility3) ⭐ (version [2.26.2](https://github.com/volatilityfoundation/volatility3/releases/tag/v2.26.2) from September, 2025)
   - The latest release of the official [Volatility 3](https://github.com/volatilityfoundation/volatility3) project
   - The [community-maintained plugins](https://github.com/volatilityfoundation/community3) for Volatility 3
 
@@ -23,7 +23,7 @@ By the way, [why are these images not (yet) official?](https://github.com/volati
   - The [official symbol tables](https://github.com/volatilityfoundation/volatility3#symbol-tables) for Windows, macOS and GNU/Linux provided by the Volatility Foundation
   - The [symbol tables](https://github.com/JPCERTCC/Windows-Symbol-Tables) provided by the [JPCERT/CC](https://www.jpcert.or.jp/) for the ongoing Windows 11+ support
 
-> The `latest` and `stable` tags, as well as the literal version number (e.g `2.7.0`) all point to the [latest official release](https://github.com/volatilityfoundation/volatility3/releases). In order to follow the development cycle of Volatility 3, an `edge` tag has been added, which points to the current state of the `master` branch—which could be unstable. Power-users should feel free to use this one at their own expense. The `sk4la/volatility3` and `sk4la/volatility3:edge` images are built every week in order to include the newest symbols.
+> The `latest` and `stable` tags, as well as the literal version number (e.g., `2.26.2`) all point to the [latest official release](https://github.com/volatilityfoundation/volatility3/releases). In order to follow the development cycle of Volatility 3, an `edge` tag has been added, which points to the current state of the `master` branch—which could be unstable. Power-users should feel free to use this one at their own expense. The `sk4la/volatility3` and `sk4la/volatility3:edge` images are built every week in order to include the newest symbols.
 
 - [`sk4la/volatility`](https://hub.docker.com/r/sk4la/volatility)
   - The latest release of the official [Volatility](https://github.com/volatilityfoundation/volatility) project (unmaintained since 2020)
@@ -86,7 +86,7 @@ The following is a practical example of using Volatility 3 (and more precisely t
 First, begin by instantiating a new container based on the `sk4la/volatility3` image:
 
 ```sh
-docker container run --entrypoint ash --interactive --tty --volume "$PWD:/home/unprivileged/workspace" --workdir /home/unprivileged/workspace sk4la/volatility3
+docker container run --entrypoint ash --interactive --tty --volume "$PWD:/workspace" --workdir /workspace sk4la/volatility3
 ```
 
 Then, inside the newly-created container, use Volatility 3 to parse the memory image and write the configuration to disk:
@@ -137,14 +137,14 @@ Actually, all _dumper_ plugins (i.e. a Volatility plugin that is able to dump ra
 This is very straightforward, simply instanciate a new container based on the `sk4la/volatility3` image using the `pdbconv` entrypoint:
 
 ```sh
-docker container run --entrypoint pdbconv --volume "$PWD:/home/unprivileged/workspace" --workdir /home/unprivileged/workspace sk4la/volatility3 --guid ce7ffb00c20b87500211456b3e905c471 --keep --pattern ntkrnlmp.pdb
+docker container run --entrypoint pdbconv --volume "$PWD:/workspace" --workdir /workspace sk4la/volatility3 --guid ce7ffb00c20b87500211456b3e905c471 --keep --pattern ntkrnlmp.pdb
 ```
 
 This will generate the [Intermediate Symbol File (ISF) file](https://volatility3.readthedocs.io/en/latest/symbol-tables.html) `ce7ffb00c20b87500211456b3e905c47-1.json.xz` in the current working directory, which will hint Volatility at how to handle this specific build in order to retrieve the information.
 
 > Note that this will fetch the correct PDB file from the official [Microsoft Internet Symbol Server](https://msdl.microsoft.com/download/symbols) so this method will not work inside air-gapped environments. See [JPCERTCC's repository](https://github.com/JPCERTCC/Windows-Symbol-Tables) and [blog post](https://blogs.jpcert.or.jp/en/2021/09/volatility3_offline.html) for more details on how to retrieve the GUID from your own binaries and use Volatility 3 inside air-gapped environments.
 
-The ISF file must then be placed either in the main symbols directory (located at `$INSTALL_PREFIX/lib/volatility3/volatility3/symbols/windows` by default) or in the current working directory, under the `symbols` subdirectory (e.g. `./symbols/windows/ntkrnlmp.pdb/ce7ffb00c20b87500211456b3e905c47-1.json.xz`). You can also use the `--symbol-dirs` option in addition to Docker's `--volume` option in order to provide the newly-created ISF files to Volatility.
+The ISF file must then be placed either in the main symbols directory (located at `$INSTALL_PREFIX/lib/volatility3/volatility3/symbols/windows` by default) or in the current working directory, under the `symbols` subdirectory (e.g., `./symbols/windows/ntkrnlmp.pdb/ce7ffb00c20b87500211456b3e905c47-1.json.xz`). You can also use the `--symbol-dirs` option in addition to Docker's `--volume` option in order to provide the newly-created ISF files to Volatility.
 
 </details>
 
@@ -221,7 +221,7 @@ Then, build the image by executing the `docker image build --tag volatility3-ove
 
 The `sk4la/volatility` image includes all community plugins from the official [volatilityfoundation/community](https://github.com/volatilityfoundation/community) repository. By default, those are stored in `/usr/local/share/volatility/plugins/community`.
 
-> You can list all included plugins using the `--help` or `--info` flags (e.g. `podman run sk4la/volatility:edge --plugins=/usr/local/share/volatility/plugins --info`). The loading order is non-deterministic and some plugins fail to load because of missing dependencies (some are just not on PyPI anymore) or because their design is not quite suitable for distribution, so you may need to run it multiple times for it to load the plugin you are looking for. I advise instead using each plugin individually in order to avoid loading dysfunctional plugins.
+> You can list all included plugins using the `--help` or `--info` flags (e.g., `podman run sk4la/volatility:edge --plugins=/usr/local/share/volatility/plugins --info`). The loading order is non-deterministic and some plugins fail to load because of missing dependencies (some are just not on PyPI anymore) or because their design is not quite suitable for distribution, so you may need to run it multiple times for it to load the plugin you are looking for. I advise instead using each plugin individually in order to avoid loading dysfunctional plugins.
 
 To load a specific community plugin (example with JPCERT's APT17 plugin):
 
@@ -240,7 +240,7 @@ Please note that many plugins made for Volatility 2 have not been maintained for
 
 The `sk4la/volatility3` and `sk4la/volatility3:edge` images include all community plugins from the official [volatilityfoundation/community3](https://github.com/volatilityfoundation/community3) repository. By default, those are stored in `/usr/local/share/volatility3/plugins/community3`.
 
-> You can list all included plugins using the `--help` flag (e.g. `podman run sk4la/volatility3:edge --plugin-dirs=/usr/local/share/volatility3/plugins --help`). Please note that many of these plugins have not been maintained a while and might be dysfunctional. I advise instead using each plugin individually in order to avoid loading dysfunctional plugins.
+> You can list all included plugins using the `--help` flag (e.g., `podman run sk4la/volatility3:edge --plugin-dirs=/usr/local/share/volatility3/plugins --help`). Please note that many of these plugins have not been maintained a while and might be dysfunctional. I advise instead using each plugin individually in order to avoid loading dysfunctional plugins.
 
 To load a specific community plugin (example with the Multi YARA plugin):
 

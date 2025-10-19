@@ -114,10 +114,8 @@ RUN if [[ "${GIT_TAG_VOLATILITY3}" == "develop" ]]; then \
     python3 -m pip install --break-system-packages build; \
     python3 -m build; \
     else \
-    
     python3 -m pip install --break-system-packages .; \
     fi && \
-    
     chmod 0755 \
         vol.py \
         volatility3/framework/symbols/windows/pdbconv.py && \
